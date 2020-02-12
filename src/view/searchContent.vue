@@ -22,24 +22,143 @@
                 <div class="right-dot"></div>
             </div>
         </div>
-        <div id="searchBox-content">
-
-        </div>
+        <el-row :gutter="100" id="searchBox-content">
+            <el-col :span="14" id="searchBox-content-left">
+                <div class="grid-content">
+                    <p>计算结果</p>
+                    <div class="grid-content-detail">
+                        <count-item countTitle="智能计算" countTitleDes="仅显示该问题的智能计算的内容" countTitleColor="#4FADFF"></count-item>
+                        <count-item countTitle="思维导图" countTitleDes="仅显示部分热门信息，更多请点击或直接搜索问题" countTitleColor="#FF9831"></count-item>
+                        <count-item countTitle="相关标签" countTitleDes="仅显示部分热门信息，更多请点击或直接搜索问题" countTitleColor="#FF5079"></count-item>
+                        <count-item countTitle="内容精选" countTitleDes="仅显示部分热门信息，更多请点击或直接搜索问题" countTitleColor="#2DF2FF"></count-item>
+                    </div>
+                    <div class="grid-content-link">
+                        <ul>
+                            <li>
+                                <p class="link-title">信用卡和理财服务，就在建行私人信贷平台</p>
+                                <p class="link-url">https://www.rong360.com/</p>
+                                <p class="link-text">建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品</p>
+                                <ul class="link-detail">
+                                    <li class="link-detail-item">住房贷款</li>
+                                    <li class="link-detail-item">信贷经理登录</li>
+                                    <li class="link-detail-item">信用卡</li>
+                                    <li class="link-detail-item">咨询</li>
+                                    <li class="link-detail-item">贷款咨询</li>
+                                    <li class="link-detail-item">金融百科</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <p class="link-title">信用卡和理财服务，就在建行私人信贷平台</p>
+                                <p class="link-url">https://www.rong360.com/</p>
+                                <p class="link-text">建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品</p>
+                            </li>
+                            <li>
+                                <p class="link-title">信用卡和理财服务，就在建行私人信贷平台</p>
+                                <p class="link-url">https://www.rong360.com/</p>
+                                <p class="link-text">建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品</p>
+                            </li>
+                            <li>
+                                <p class="link-title">信用卡和理财服务，就在建行私人信贷平台</p>
+                                <p class="link-url">https://www.rong360.com/</p>
+                                <p class="link-text">建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品</p>
+                            </li>
+                            <li>
+                                <p class="link-title">信用卡和理财服务，就在建行私人信贷平台</p>
+                                <p class="link-url">https://www.rong360.com/</p>
+                                <p class="link-text">建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品</p>
+                            </li>
+                            <li>
+                                <p class="link-title">信用卡和理财服务，就在建行私人信贷平台</p>
+                                <p class="link-url">https://www.rong360.com/</p>
+                                <p class="link-text">建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品</p>
+                            </li>
+                            <li>
+                                <p class="link-title">信用卡和理财服务，就在建行私人信贷平台</p>
+                                <p class="link-url">https://www.rong360.com/</p>
+                                <p class="link-text">建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </el-col>
+            <el-col :span="10" id="searchBox-content-right">
+                <div class="grid-content">
+                    <p>主要学习来源</p>
+                    <ul class="searchBox-content-right-list">
+                        <li v-for="item in rightList" :key="item">
+                            <p>{{item.title}}</p>
+                            <p>{{item.url}}</p>
+                        </li>
+                    </ul>
+                </div>
+            </el-col>
+        </el-row>
         <robot-chat :robotShow="robotShow" @changeRobotState="changeRobotState"></robot-chat>
     </div>
 </template>
 <script>
 import robotChat from '@/components/robotChat';
+import countItem from '@/components/countItem';
 export default {
     components:{
-        robotChat
+        robotChat,countItem
     },
     data(){
         return{
             searchVal:'',
             robotShow:false,
             tabList:["全部","智能问答","思维导图","内容精选","金融标签","其他重要分类项"],
-            tabIndex:0
+            tabIndex:0,
+            rightList:[
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                },
+                {
+                    title:"医院可以刷信用卡么?",
+                    url:"creditcard.eictic.com 2020-01"
+                }
+            ]
         }
     },
     methods:{
@@ -57,11 +176,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 #searchBox{
-    background: url("/static/img/searchBg.png") no-repeat center center;
+    //background: url("/static/img/searchBg.png") no-repeat center center;
     background-size: cover;
     width: 100%;
     height: 100%;
     position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
     #searchBox-header{
         width: 100%;
         height: 126px;
@@ -69,6 +190,8 @@ export default {
         top: 0;
         left: 0;
         z-index: 999;
+        background: url("/static/img/smallTop.png") no-repeat center center;
+        background-size: cover;
         #searchBox-header-left{
             height: 126px;
             margin: 0;
@@ -225,11 +348,154 @@ export default {
     }
     #searchBox-content{
         width: 100%;
-        height: 900px;
         background: #000;
         position: absolute;
-        top: 126px;
+        top: 125px;
         left: 0;
+        height: calc(100% - 125px);
+        overflow: auto;
+        margin: 0 !important;
+        
+        
+        #searchBox-content-left{
+            .grid-content-detail{
+                min-height: 300px;
+            }
+            .grid-content-link{
+                ul{
+                    list-style: none;
+                    padding-right: 20px;
+                    background: #000;
+                    padding: 0 20px;
+                    li{
+                        margin: 10px 0;
+                        .link-title{
+                            color: #3C6289;
+                            font-size: 16px;
+                            height: 30px;
+                            line-height: 30px;
+                            padding: 0;
+                            margin: 0;
+                            cursor: pointer;
+                        }
+                        .link-title:hover{
+                            text-decoration: underline;
+                            color: #289BFF;
+                        }
+                        .link-url{
+                            color: #7485AE;
+                            font-size: 12px;
+                            height: 17px;
+                            line-height: 17px;
+                            padding: 0;
+                            margin: 0;
+                        }
+                        .link-text{
+                            color: #FFF;
+                            font-size: 12px;
+                            height: 34px;
+                            padding: 0;
+                            margin: 0;
+                            text-overflow: -o-ellipsis-lastline;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                        }
+                        .link-detail{
+                            list-style: none;
+                            padding: 0;
+                            margin: 0;
+                            overflow: hidden;
+                            .link-detail-item{
+                                width: 29.3%;
+                                height: 32px;
+                                line-height: 32px;
+                                color: #3C6289;
+                                font-size: 14px;
+                                background: #1A1E2A;
+                                text-align: center;
+                                float: left;
+                                margin: 10px 2%;
+                                border-radius: 3px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        #searchBox-content-right{
+            ul{
+                margin: 0;
+                padding: 0 !important; 
+                li{
+                    background: #202433;
+                    height: 60px;
+                    &>p:nth-child(1){
+                        color: #fff;
+                        opacity: 0.8;
+                        font-size: 14px;
+                        height: 30px;
+                        line-height: 35px;
+                        margin: 0;
+                        text-indent: 20px;
+                    }
+                    &>p:nth-child(2){
+                        color: #7485AE;
+                        font-size: 12px;
+                        height: 20px;
+                        line-height: 20px;
+                        margin: 0;
+                        text-indent: 20px;
+                    }
+                    margin-bottom: 10px;
+                }
+            }
+            
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+        .el-col {
+            border-radius: 4px;
+        }
+        
+        .row-bg {
+            padding: 10px 0;
+            background-color: #f9fafc;
+        }
+        .grid-content {
+            &>p{
+                height: 34px;
+                line-height: 40px;
+                color: #999;
+                font-size: 12px;
+            }
+            &>div{
+                background: #16171F;
+            }
+        }
+    }
+    #searchBox-content::-webkit-scrollbar{
+        width:10px;
+        height:10px;
+        /**/
+    }
+    #searchBox-content::-webkit-scrollbar-track{
+        background: #000;
+        border-radius:2px;
+    }
+    #searchBox-content::-webkit-scrollbar-thumb{
+        background: #DAEBF9;
+        border-radius:10px;
+    }
+    #searchBox-content::-webkit-scrollbar-thumb:hover{
+        background: #4FADFF;
+    }
+    #searchBox-content::-webkit-scrollbar-corner{
+        background: #179a16;
     }
 }
 </style>
