@@ -6,27 +6,32 @@
 	    <div class="content_card">
         <div class="card_title">{{title}}</div>
         <div class="card_date">{{date}}</div>
-        <div :style="cardStyle(item.type)" v-for="(item,index) in cardInfo" :key="item.id">
+        <div :style="cardStyle(item.type)" v-for="(item) in cardInfo" :key="item.id">
           {{item.article}}
         </div>
       </div>
+      <annotation-area></annotation-area>
     </div>
     
-    <annotation-area></annotation-area>
+    
+    <robot-chat :robotShow="robotShow" @changeRobotState="changeRobotState"></robot-chat>
   </div>
 </template>
 <script>
 import SearchBox from "../components/SearchBox";
 import AnnotationArea from "../components/AnnotationArea"
+import robotChat from "../components/robotChat"
 export default {
   components: {
     SearchBox,
-    AnnotationArea
+    AnnotationArea,
+    robotChat
   },
   data(){
     return{
       title: '信用卡取现',
       date: '创建时间： 2019年12月12日； 作者：刘茜茜',
+      robotShow:false,
       cardInfo: [
         {id:1,
          type:'small',
@@ -92,6 +97,14 @@ export default {
         if(type == "small") {return 'font-size: 12px;color: #666666;letter-spacing: 0;line-height:20px;padding-bottom:20px'}
       }
     }
+  },
+  methods: {
+     toggleRobot(){
+            this.robotShow=!this.robotShow;
+        },
+        changeRobotState(){
+            this.robotShow=false;
+        }
   }
 
 
@@ -102,20 +115,22 @@ export default {
 <style lang="scss">
 .overall
  {
-  width: 1440px;
-  height: 860px;
+  width: 100%;
+  height: 100%;
+  position: relative;
   background: #F6F6F6;
   position: absolute;
-  top:50%;
-  left: 50%;
-  margin: -430px 0 0 -720px;
+  overflow: hidden;
+  left: 0;
+  margin: 0 auto;
   border: 1px solid #D0D0D0;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
 }
 .content {
 	width: 876px;
 	height: 670px;
-  left: 104px;
+  left: 10%;
+  top: 100px;
   margin: 0 auto;
 	position: absolute;
 	.content_title {
@@ -131,6 +146,7 @@ export default {
 		background: #FFFFFF;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
     padding: 26px 30px;
+    overflow-y: scroll;
     .card_title {
       font-size: 25px;
     }

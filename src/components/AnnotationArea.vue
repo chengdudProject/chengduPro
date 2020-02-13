@@ -13,17 +13,35 @@
 			 <div class="links_content">{{item.content | snippet}}</div>
 			 <el-divider></el-divider>
 		 </div>
-		 <div class="share">分享到：</div>
+		 <div class="share">
+			 <div class="share_title">分享到：</div>
+			 <div class="share_icon">
+					<div class="toQq" @click="shareTo('qq')">
+						<img src="../assets/qq.png" alt="">
+					</div>
+					<div class="toQzone" @click="shareTo('qzone')">
+						<img src="../assets/qzone.png" alt="">
+					</div>
+					<div class="toWechat" @click="shareTo('wechat')">
+						<img src="../assets/wechat.png" alt="">
+					</div>
+					<div class="toSina" @click="shareTo('sina')">
+						<img src="../assets/sina.png" alt="">
+					</div>
+			 </div>
+			</div>
 		 <div class="relevant_tags">
 			 <div class="tag-group">
-			 <span class="tag-group__title">相关标签：</span>
-			 <el-tag
-				v-for="item in items"
-				:key="item.label"
-				:type="item.type"
-				effect="plain">
-				{{ item.label }}
-			</el-tag>
+			 <span class="tag-title">相关标签：</span>
+			 <div class="tagsName">
+				<el-tag 
+					v-for="item in items"
+					:key="item.label"
+					:type="item.type"
+					effect="plain">
+					{{ item.label }}
+				</el-tag>
+			 </div>
 			 </div>
 		 </div>
 	 </div>
@@ -53,11 +71,11 @@
 					}
 				],
 				items: [
-					{ type: '', label: '标签一' },
-          { type: 'success', label: '标签二缓一缓' },
-          { type: 'info', label: '标签三哈巴河' },
-          { type: 'danger', label: '标签四' },
-          { type: 'warning', label: '标签五' }
+					{ type: '', label: '信用卡取现' },
+          { type: 'info', label: '信用卡分期还款' },
+          { type: 'info', label: '信用卡逾期' },
+          { type: 'info', label: '储蓄卡' },
+          { type: 'info', label: '储蓄卡挂失' }
 				]
 			}
 		},
@@ -74,7 +92,8 @@
 	width: 440px;
 	height: 100%;
 	position: absolute;
-	left: 1000px;
+	top: 0;
+	left: 886px; ;
 	.note_title {
 		line-height: 41px;
 		font-size: 12px;
@@ -129,10 +148,52 @@
 		}
 	}
 	.share {
-		height: 114px;
+		height: 100px;
+    .share_title {
+			width: 56px;
+			height: 20px;
+			font-size: 14px;
+			padding-top: 5px;
+		}
+		.share_icon {
+			height: 36px;
+			.toQq {
+				float: left;
+				padding-top: 8px;
+				padding-right: 8px;
+			}
+			.toQzone {
+				float: left;
+				padding: 8px;
+			}
+			.toWechat {
+				float: left;
+				padding: 8px;
+			}
+			.toSina {
+				float: left;
+				padding: 8px;
+			}
+		}
 	}
 	.relevant_tags {
-
+		height: 120px;
+		.tag-group {
+			height: 120px;
+      .tag-title{
+				width: 70px;
+				height: 20px;
+				font-size: 14px;
+			}
+		.tagsName {
+			padding-top: 10px;
+			.el-tag {
+				margin-right: 6px;
+				margin-bottom: 10px;
+				font-size: 13px;
+			}
+		}		
+		}
 	}
 }
 </style>
