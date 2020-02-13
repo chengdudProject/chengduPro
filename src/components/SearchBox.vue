@@ -34,18 +34,20 @@
 .search_box {
   background: #FFFFFF;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
-  width: 1440px;
+  width: 100%;
   height: 100px;
+  position: relative;
     .title {
       width: 340px;
       height: 100px;
       background: url(../assets/box-small.png) no-repeat 35px 23px;
       display: inline-block;
+      float: left;
       .box {
         margin: 0;
         width: 191px;
         height: 100px;
-        position: absolute;
+        position: relative;
         padding-left: 104px;
         padding-top: 33px;
         vertical-align: middle;
@@ -60,7 +62,6 @@
       padding-left: 45px;
       width: 640px;
       height: 50px;
-      position: absolute;
       display: inline-block;
       .parent {
         position: relative;
