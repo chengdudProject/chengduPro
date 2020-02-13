@@ -32,7 +32,7 @@
 <script>
 import SearchBox from "../components/SearchBox";
 import AnnotationArea from "../components/AnnotationArea"
-import robotChat from "../components/robotChat"
+import robotChat from "@/components/robotChat"
 import gojs from 'gojs'
 import MindOne from "../components/MindOne"
 
@@ -43,8 +43,20 @@ export default {
     MindOne,
     robotChat
   },
+  data() {
+    return {
+      title:"",
+      date: "",
+      robotShow:false
+    }
+  },
   methods: {
-    
+     toggleRobot(){
+            this.robotShow=!this.robotShow;
+        },
+        changeRobotState(){
+            this.robotShow=false;
+        }
   }
   
 }

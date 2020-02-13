@@ -31,6 +31,7 @@ export default {
     return{
       title: '信用卡取现',
       date: '创建时间： 2019年12月12日； 作者：刘茜茜',
+      robotShow:false,
       cardInfo: [
         {id:1,
          type:'small',
@@ -96,6 +97,14 @@ export default {
         if(type == "small") {return 'font-size: 12px;color: #666666;letter-spacing: 0;line-height:20px;padding-bottom:20px'}
       }
     }
+  },
+  methods: {
+     toggleRobot(){
+            this.robotShow=!this.robotShow;
+        },
+        changeRobotState(){
+            this.robotShow=false;
+        }
   }
 
 
