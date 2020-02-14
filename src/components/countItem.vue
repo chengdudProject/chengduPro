@@ -1,11 +1,11 @@
 <template>
-    <div class="count-wrap">
+    <div class="count-wrap" :style="`min-height:${height}px`">
       <p class="count-wrap-title">
         <b>{{countTitle}}</b>
         <span>{{countTitleDes}}</span>
         <i>...</i>
       </p>
-      <div class="count-wrap-content" :style="`border-top: 1px solid ${countTitleColor};`">
+      <div class="count-wrap-content" :style="`border-top: 1px solid ${countTitleColor};min-height:${height-20}px`">
         <p class="count-wrap-content-headerIcon" :style="`background:${countTitleColor};`"></p>
         <!-- <p class="count-wrap-content-headerIconTriangle" :style="`background:${countTitleColor};`"></p> -->
         <slot></slot>
@@ -27,7 +27,11 @@ export default {
       countTitleColor:{
           type:String,
           default:"#4FADFF"
-      }
+      },
+      height:{
+          type:String,
+          default:"235"
+      },
     },
     data(){
       return{
@@ -40,7 +44,6 @@ export default {
 <style lang="scss" scoped>
 .count-wrap{
   width: calc(100% - 40px);
-  min-height: 235px;
   padding: 20px;
   .count-wrap-title{
     height: 30px;
@@ -72,12 +75,11 @@ export default {
     }
   }
   .count-wrap-content{
-    min-height:210px;
     width: 100%; 
     border-top: 1px solid #4FADFF;
     margin-top: 6px;
     position: relative;
-    background: #454E67;
+    background: #212534;
     opacity: 0.9;
     .count-wrap-content-headerIcon{
       position: absolute;

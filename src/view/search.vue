@@ -19,7 +19,7 @@
             <div id="searchBox-content-logo">计算BOX</div>
             <div id="searchBox-content-input">
                 <el-input v-model="searchVal" placeholder="请输入关键词"></el-input>
-                <el-button type="primary" icon="el-icon-compute">智能计算</el-button>
+                <el-button type="primary" icon="el-icon-compute" @click.native="searchClick">智能计算</el-button>
                 <span id="icon-audio"></span>
                 <span id="icon-photo"></span>
             </div>
@@ -45,6 +45,12 @@ export default {
         },
         changeRobotState(){
             this.robotShow=false;
+        },
+        searchClick(){
+            console.log(111)
+            this.$router.push({
+                path:`/searchContent`
+            })
         }
     }
 }
