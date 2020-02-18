@@ -5,6 +5,7 @@ import search from '@/view/search'
 import searchContent from '@/view/searchContent'
 import contentRead from '@/view/contentRead'
 import mindMapping from '@/view/mindMapping'
+import relationNetwork from '@/view/relationNetwork'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/mindMapping',
       name: 'mindMapping',
       component: mindMapping
+    },
+    {
+      path: '/relationNetwork',
+      name: 'relationNetwork',
+      component: relationNetwork
     }
   ]
 })
