@@ -4,7 +4,6 @@
 	 </div>
    
      <span id="overviewSpan" style="display: inline-block; vertical-align: top;">
-     <div id="myOverviewDiv" style="width:150px; height: 100px" class="diagramStyling"></div>
      </span>
 </div>
 </template>
@@ -170,7 +169,8 @@ import gojs, { Diagram } from 'gojs'
 
 <style lang="scss" scoped>
 .mind-map {
-	width: 750px;
-  height: 450px;
+	//width: 750px;
+  //height: 450px;
+  padding-left: 10%;
 }
 </style>

@@ -95,11 +95,11 @@
 
 <style lang="scss" scoped>
 /deep/.notes {
-	width: 440px;
+	width: 26%;
 	height: 100%;
 	position: absolute;
 	top: 0;
-	left: 886px; ;
+	right: 8%;
 	.note_title {
 		line-height: 41px;
 		font-size: 12px;
@@ -108,8 +108,8 @@
 		vertical-align: middle;
 	}
 	.note_content {
-		width: 336px;
-		height: 670px;
+		width: 100%;
+		min-height: 670px;
 		padding-left: 20px;
 	  padding-right: 22px;
 		background: #FFFFFF;

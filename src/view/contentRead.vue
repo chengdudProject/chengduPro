@@ -191,9 +191,9 @@ export default {
             }
         }
 .content {
-	width: 876px;
-	height: 670px;
-  left: 10%;
+	width: 90%;
+	height: calc(100% - 125px);
+  left: 8%;
   top: 100px;
   margin: 0 auto;
 	position: absolute;
@@ -205,8 +205,8 @@ export default {
 		vertical-align: middle;
 	}
 	.content_card {
-		width: 816px;
-		height: 618px;
+		width: 60%;
+		min-height: 670px;
 		background: #FFFFFF;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
     padding: 26px 30px;

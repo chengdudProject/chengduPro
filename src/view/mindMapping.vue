@@ -12,18 +12,18 @@
 	    <div class="mind_card">
         <div class="mind_title">{{title}}</div>
         <div class="mind_date">{{date}}</div>
-        <img id="buttonL" src="../assets/left.png" alt=""><img>
-        <img id="buttonR" src="../assets/right.png" alt=""><img>
         <div class="mind_map">
+          <img id="buttonL" src="../assets/left.png" alt=""><img>
+          <img id="buttonR" src="../assets/right.png" alt=""><img>
         <mind-one></mind-one> 
         </div>
          <div class="swiper">
-          <img src="../assets/mind.jpg" width="120px" height="72px" alt="">
-          <img src="../assets/mind.jpg" width="120px" height="72px" alt="">
-          <img src="../assets/mind.jpg" width="120px" height="72px" alt="">
-          <img src="../assets/mind.jpg" width="120px" height="72px" alt="">
-          <img src="../assets/mind.jpg" width="120px" height="72px" alt="">
-          <img src="../assets/mind.jpg" width="120px" height="72px" alt="">
+          <img src="../assets/mind.jpg" width="15%" height="72px" alt="">
+          <img src="../assets/mind.jpg" width="15%" height="72px" alt="">
+          <img src="../assets/mind.jpg" width="15%" height="72px" alt="">
+          <img src="../assets/mind.jpg" width="15%" height="72px" alt="">
+          <img src="../assets/mind.jpg" width="15%" height="72px" alt="">
+          <img src="../assets/mind.jpg" width="15%" height="72px" alt="">
           <i class="iconL"><img src="../assets/iconL.png" alt=""></i>
           <i class="iconR"><img src="../assets//iconR.png" alt=""></i>
         </div>
@@ -133,8 +133,8 @@ export default {
             }
         }
 .content {
-	width: 876px;
-	height: 100%;
+	width: 80%;
+  min-height: 670px;
   left: 10%;
 	position: absolute;
 	.content_title {
@@ -145,8 +145,8 @@ export default {
 		vertical-align: middle;
 	}
 	.mind_card {
-		width: 848px;
-		height: 618px;
+		width: 60%;
+    min-height: 670px;
 		background: #FFFFFF;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
     padding: 26px 0 26px 30px;
@@ -164,40 +164,43 @@ export default {
       height: 44px;
       display: inline-block;
       position: absolute;
-      top: 350px;
-      right:20px;
+      top: 50%;
+      right: 20px;
     }
     #buttonR {
       height: 44px;
       width: 44px;
-      right: 500px;
       display: inline-block;
       position: absolute;
-      top: 350px;
-      left:20px;
+      top: 50%;
+      left: 20px;
     }
     .mind_map {
-      width: 740px;
-      height: 450px;
-      padding: 27px 33px;
-      .myDiagramDiv {
-        margin: 0 auto;
-      }
-      .mind-map {
-        padding-top: 50px;
-      }
+      //width: 740px;
+      width: 55%;
+      //height: 450px;
+      //width: calc(100%-30px);
+      //padding: 27px 33px;
+      //margin: 0 auto;
+      box-shadow: 0 2px 10px 0 rgba(225,225,225,0.75);
+      position: absolute;
+          top: 40%;
+          left: 31%;
+          transform: translate(-50%, -50%);
     }
   }
   .swiper {
     padding-left: 25px;
+    position: relative;
+    top: 500px;
     .iconL {
       position: absolute;
-      left: 10px;
+      left: 0;
       padding-top: 25px;
     }
     .iconR {
       position: absolute;
-      right: 10px;
+      right: 20px;
       padding-top: 25px;
     }
 
