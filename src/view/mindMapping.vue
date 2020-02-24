@@ -1,6 +1,12 @@
 <template>
   <div class="overall">
-    <search-box></search-box>
+    <search-box :pageName="pageName"></search-box>
+    <div id="searchBox-header-right" @click="toggleRobot">
+                <p>Hi,我是Panda博士，有什么问题可以问我哟</p>
+                <div id="searchBox-header-right-photo"></div>
+                <div class="right-dot"></div>
+                <div class="right-dot"></div>
+      </div>
     <div class="content">
       <div class="content_title">思维导图</div>
 	    <div class="mind_card">
@@ -9,8 +15,7 @@
         <img id="buttonL" src="../assets/left.png" alt=""><img>
         <img id="buttonR" src="../assets/right.png" alt=""><img>
         <div class="mind_map">
-        <mind-one></mind-one>
-       
+        <mind-one></mind-one> 
         </div>
          <div class="swiper">
           <img src="../assets/mind.jpg" width="120px" height="72px" alt="">
@@ -24,18 +29,17 @@
         </div>
         <annotation-area></annotation-area>
 	    </div>
+       
   </div>
-    
     <robot-chat :robotShow="robotShow" @changeRobotState="changeRobotState"></robot-chat>
   </div>
 </template>
 <script>
 import SearchBox from "../components/SearchBox";
 import AnnotationArea from "../components/AnnotationArea"
-import robotChat from "@/components/robotChat"
 import gojs from 'gojs'
 import MindOne from "../components/MindOne"
-
+import robotChat from "../components/robotChat"
 export default {
   components: {
     SearchBox,
@@ -47,11 +51,12 @@ export default {
     return {
       title:"",
       date: "",
-      robotShow:false
+      robotShow:false,
+      pageName: '思维导图'
     }
   },
   methods: {
-     toggleRobot(){
+    toggleRobot(){
             this.robotShow=!this.robotShow;
         },
         changeRobotState(){
@@ -74,6 +79,59 @@ export default {
   border: 1px solid #D0D0D0;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
 }
+#searchBox-header-right{
+            width: 350px;
+            height: 100px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: pointer;
+            p{
+                width: 273px;
+                background: #4FADFF;
+                height: 34px;
+                font-size: 12px;
+                margin: 0;
+                color: #fff;
+                display: inline-block;
+                line-height: 34px;
+                text-align: center;
+                border-radius: 19.5px 19.5px 0px 19.5px;
+                position: absolute;
+                top: 30px;
+                right: 110px;
+            }
+            #searchBox-header-right-photo{
+                width: 61px;
+                height: 61px;
+                display: inline-block;
+                border-radius: 30.5px;
+                position: absolute;
+                top: 16px;
+                right: 40px;
+                background: url("/static/img/pandaRobot.png") no-repeat center center;
+            }
+            &>.right-dot:nth-child(3){
+                background: #289BFF;
+                position: absolute;
+                top: 21px;
+                right: 26px;
+                display: inline-block;
+                width: 15px;
+                height: 15px;
+                border-radius: 7.5px;
+            }
+            &>.right-dot:nth-child(4){
+                background: #289BFF;
+                position: absolute;
+                top: 11px;
+                right: 17px;
+                display: inline-block;
+                width: 9px;
+                height: 9px;
+                border-radius: 4.5px;
+            }
+        }
 .content {
 	width: 876px;
 	height: 100%;
@@ -124,6 +182,9 @@ export default {
       padding: 27px 33px;
       .myDiagramDiv {
         margin: 0 auto;
+      }
+      .mind-map {
+        padding-top: 50px;
       }
     }
   }

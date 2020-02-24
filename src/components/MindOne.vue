@@ -1,13 +1,16 @@
 <template>
 	<div class="mind-map">
-   <div class="myDiagramDiv" id="myDiagramDiv" style="border: 1px solid white; width: 498px; height: 352px; position: relative; cursor: auto;">
-	</div>
-
-	</div>
+   <div class="myDiagramDiv" id="myDiagramDiv" style="border: 1px solid white; width: 499px; height: 352px; position: relative; cursor: auto;">
+	 </div>
+   
+     <span id="overviewSpan" style="display: inline-block; vertical-align: top;">
+     <div id="myOverviewDiv" style="width:150px; height: 100px" class="diagramStyling"></div>
+     </span>
+</div>
 </template>
 
 <script>
-import gojs from 'gojs'
+import gojs, { Diagram } from 'gojs'
 	export default {
 		data(){
     return{
@@ -117,7 +120,9 @@ import gojs from 'gojs'
               });
             });
             myDiagram.model = go.Model.fromJson(_this.mindNode);
-            
+
+            var myOverview = gm(go.Overview, 'myOverviewDiv',
+                               { observed: diagram });   
 },
   methods: {
 

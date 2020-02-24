@@ -83,6 +83,12 @@
 			snippet: function(value) {
         return value.slice(0,43) + "...";
 			}
+		},
+		shareTo(stype) {
+			var stit = '';
+			var slink = '';
+			var lk = '';
+			//获取文章标题
 		}
 	}
 </script>

@@ -1,31 +1,44 @@
 <template>
   <div class="search_box">
     <div class="title">
-      <div class="box">计算BOX |</div>
-      <p></p>
-    </div>
+      <div class="box">
+        <div class="routerSearch" @click="toBox"> 计算BOX |</div>
+        <p>{{pageName}}</p></div>
+      </div>
     <div class="container">
       <form action="" class="parent">
         <input type="text" class="input" placeholder="请输入内容" value="信用卡">
         <input type="button" class="btn_vioce">
         <input type="button" class="btn_picture">
-        <button type="submit" class="btn">智能计算</button>
+        <button type="submit" class="btn" @click="toSearchContent">智能计算</button>
       </form>
     </div>
-    <div class="intelligent_answer">
+     
       
-    </div>
   </div>
 </template>
 
 <script>
+
   export default {
+    components: {
+      
+    },
     data() {
       return {
         input: '信用卡',
-        daohang:' '
+        daohang:' ',
+        pageName: this.$attrs.pageName
       }
     },
+    methods: {
+      toBox() {
+        this.$router.replace('/search')
+      },
+      toSearchContent() {
+        this.$router.replace('/searchContent')
+      }
+    }
     
   }
 </script>
@@ -42,24 +55,34 @@
       height: 100px;
       background: url(../assets/box-small.png) no-repeat 35px 23px;
       display: inline-block;
-      float: left;
       .box {
         margin: 0;
         width: 191px;
         height: 100px;
-        position: relative;
+        position: absolute;
         padding-left: 104px;
-        padding-top: 33px;
+        padding-top: 16px;
         vertical-align: middle;
-        font-family: PingFangSC-Regular;
-        font-size: 24px;
-        color: #222222;
-        letter-spacing: 0;
+        .routerSearch {
+          font-family: PingFangSC-Regular;
+          font-size: 24px;
+          color: #222222;
+          letter-spacing: 0;
+          display: inline-block;
+        }
+        p {
+          font-size: 18px;
+          color: #289BFF;
+          letter-spacing: 0;
+          line-height: 33px;
+          display: inline-block;
+        }
       }
     }
     .container {
       margin-top: 20px;
       padding-left: 45px;
+      position: absolute;
       width: 640px;
       height: 50px;
       display: inline-block;
@@ -110,6 +133,7 @@
         }
       }
       }
+      
 }
 
 </style>
