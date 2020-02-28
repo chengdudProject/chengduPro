@@ -6,8 +6,8 @@
                     计算BOX
                 </div>
                 <div id="searchBox-header-left-input">
-                    <el-input v-model="searchVal" placeholder="请输入关键词"></el-input>
-                    <el-button type="primary" icon="el-icon-compute">智能计算</el-button>
+                    <el-input v-model="searchVal" placeholder="请输入关键词" @keyup.enter.native="searchContent"></el-input>
+                    <el-button type="primary" icon="el-icon-compute" @click="searchContent">智能计算</el-button>
                     <span id="icon-audio"></span>
                     <span id="icon-photo"></span>
                 </div>
@@ -26,7 +26,7 @@
             <el-col :span="14" id="searchBox-content-left">
                 <div class="grid-content">
                     <p>计算结果</p>
-                    <div class="grid-content-detail">
+                    <div class="grid-content-detail" v-show="!isPerson">
                         <count-item countTitle="智能计算" countTitleDes="仅显示该问题的智能计算的内容" countTitleColor="#4FADFF">
                             <div id="intelligent-computing">
                                 <div class="computing-logo">
@@ -102,7 +102,7 @@
                             </div>
                         </count-item>
                     </div>
-                    <div class="grid-content-link">
+                    <div class="grid-content-link" v-show="!isPerson">
                         <ul>
                             <li v-for="(item,linksIndex) in linkList" :key="linksIndex">
                                 <p class="link-title" v-html="item.title"></p>
@@ -115,17 +115,126 @@
                         </ul>
                         <p class="showMore" @click="showMore">展示更多</p>
                     </div>
+                    <div class="grid-content-detail" v-show="isPerson">
+                        <count-item countTitle="个人简介" countTitleDes="搜索人相关简介" countTitleColor="#4FADFF" height="270">
+                            <div id="profile">
+                                <div class="profile-logo">
+                                    <img src="/static/img/xietingfeng.jpg">
+                                </div>
+                                <div class="profile-content">
+                                    <p class="profile-content-name">谢霆锋</p>
+                                    <p class="profile-content-info">
+                                        <span>职业：工程师</span>
+                                        <span>代表作品：腾讯QQ</span>
+                                        <span>年龄：32岁</span>
+                                        <span>出生年月：1982年6月</span>
+                                    </p>
+                                    <p class="profile-content-des">简介：LAMP兄弟连教学总监，毕业于首都经贸大学计算机系，拥有多年软件开发经验，曾先后人大连科特软件公司高级软件工程师，香港及时集团管理部总经理，北京校区副校长，东软长春办事处高级技术教师，具有扎实的技术工地和丰富的教学经验，精通各种操作系统，嵌入式开发、C、C++、J2EE、J2ME、J2SE、LAMP开发及Oracle数据库等技术；2004年开始从事IT技术培训，具有扎实的技术功底和丰富的教学经验，国内最高的PHP技术讲师之一，具有五年软件开发工作经验、四年IT教学经验</p>
+                                </div>
+                            </div>
+                        </count-item>
+                        <count-item countTitle="内容精选" countTitleDes="个人信息精选内容" countTitleColor="#2DF2FF" height="230">
+                            <ul id="person-select">
+                                <li>身高：175cm</li>
+                                <li>体重：75kg</li>
+                                <li>兴趣爱好：摄影、画画</li>
+                                <li>技能：C++、J2EE、J2ME</li>
+                                <li>专利：无</li>
+                                <li>获奖：无</li>
+                                <li>参与项目：员工渠道/智慧银行</li>
+                                <li>所属团队：网点渠道开发</li>
+                                <li>其他：无</li>
+                            </ul>
+                        </count-item>
+                        <count-item countTitle="相似人物列表" countTitleDes="其他你可能感兴趣的人" countTitleColor="#FF9831" height="700">
+                            <ul id="similar-person">
+                                <li>
+                                    <div class="person-logo">
+                                        <img src="/static/img/xietingfeng.jpg">
+                                    </div>
+                                    <div class="person-content">
+                                        <p class="person-content-name">黄晓明</p>
+                                        <p class="person-content-info">
+                                            <span>职业：工程师</span>
+                                            <span>代表作品：腾讯QQ</span>
+                                            <span>年龄：32岁</span>
+                                            <span>出生年月：1982年6月</span>
+                                        </p>
+                                        <p class="person-content-des">简介：LAMP兄弟连教学总监，毕业于首都经贸大学计算机系，拥有多年软件开发经验，曾先后人大连科特软件公司高级软件工程师，香港及时集团管理部总经理，北京校区副校长，东软长春办事处高级技术教师，具有扎实的技术工地和丰富的教学经验，精通各种操作系统，嵌入式开发、C、C++、J2EE、J2ME、J2SE、LAMP开发及Oracle数据库等技术；2004年开始从事IT技术培训，具有扎实的技术功底和丰富的教学经验，国内最高的PHP技术讲师之一，具有五年软件开发工作经验、四年IT教学经验</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="person-logo">
+                                        <img src="/static/img/xietingfeng.jpg">
+                                    </div>
+                                    <div class="person-content">
+                                        <p class="person-content-name">刘亦玲</p>
+                                        <p class="person-content-info">
+                                            <span>职业：工程师</span>
+                                            <span>代表作品：腾讯QQ</span>
+                                            <span>年龄：32岁</span>
+                                            <span>出生年月：1982年6月</span>
+                                        </p>
+                                        <p class="person-content-des">简介：LAMP兄弟连教学总监，毕业于首都经贸大学计算机系，拥有多年软件开发经验，曾先后人大连科特软件公司高级软件工程师，香港及时集团管理部总经理，北京校区副校长，东软长春办事处高级技术教师，具有扎实的技术工地和丰富的教学经验，精通各种操作系统，嵌入式开发、C、C++、J2EE、J2ME、J2SE、LAMP开发及Oracle数据库等技术；2004年开始从事IT技术培训，具有扎实的技术功底和丰富的教学经验，国内最高的PHP技术讲师之一，具有五年软件开发工作经验、四年IT教学经验</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="person-logo">
+                                        <img src="/static/img/xietingfeng.jpg">
+                                    </div>
+                                    <div class="person-content">
+                                        <p class="person-content-name">欧阳华</p>
+                                        <p class="person-content-info">
+                                            <span>职业：工程师</span>
+                                            <span>代表作品：腾讯QQ</span>
+                                            <span>年龄：32岁</span>
+                                            <span>出生年月：1982年6月</span>
+                                        </p>
+                                        <p class="person-content-des">简介：LAMP兄弟连教学总监，毕业于首都经贸大学计算机系，拥有多年软件开发经验，曾先后人大连科特软件公司高级软件工程师，香港及时集团管理部总经理，北京校区副校长，东软长春办事处高级技术教师，具有扎实的技术工地和丰富的教学经验，精通各种操作系统，嵌入式开发、C、C++、J2EE、J2ME、J2SE、LAMP开发及Oracle数据库等技术；2004年开始从事IT技术培训，具有扎实的技术功底和丰富的教学经验，国内最高的PHP技术讲师之一，具有五年软件开发工作经验、四年IT教学经验</p>
+                                    </div>
+                                </li>
+                                <el-button id="person-more"></el-button>
+                            </ul>
+                        </count-item>
+                    </div>
                 </div>
             </el-col>
             <el-col :span="10" id="searchBox-content-right">
                 <div class="grid-content">
-                    <p>主要学习来源</p>
-                    <ul class="searchBox-content-right-list">
+                    <p v-show="!isPerson">主要学习来源</p>
+                    <ul class="searchBox-content-right-list" v-show="!isPerson">
                         <li v-for="(item,index) in rightList" :key="index" :class="item.active?'active':''">
                             <p>{{item.title}}</p>
                             <p>{{item.url}}</p>
                         </li>
                     </ul>
+                    <div id="business-style" v-show="isPerson">
+                        <ul class="business-style-tab">
+                            <li :class="businessTabIndex==0?'active':''" @click="businessTabClick(0)">热门项目</li>
+                            <li :class="businessTabIndex==1?'active':''" @click="businessTabClick(1)">热搜人物</li>
+                            <li :class="businessTabIndex==2?'active':''" @click="businessTabClick(2)">活跃小组</li>
+                            <li :class="businessTabIndex==3?'active':''" @click="businessTabClick(3)">最近上线</li>
+                            <li :class="businessTabIndex==4?'active':''" @click="businessTabClick(4)">重要通知</li>
+                        </ul>
+                        <ul class="business-style-list">
+                            <li v-for="(item,index) in businessStyleList" :key="index" :class="`background-${item.background}`"><div class="item-value">{{item.value}}</div><div class="border-base1"></div><div class="border-base2"></div></li>
+                        </ul>
+                        <el-button id="business-more"></el-button>
+                    </div>
+                    <div id="relation-network" v-show="isPerson">
+                        <p>人际关系网</p>
+                        <div class="relation-network-content">
+                            <echarts-relation @changeSelectName="changeSelectName"></echarts-relation>
+                        </div>
+                        <el-button type="primary" class="relation-network-btn" @click="makeComparison">比一比</el-button>
+                    </div>
+                    <div id="six-space" v-show="isPerson">
+                        <p>六度空间</p>
+                        <div class="six-space-content">
+                            <echarts-six-space :list="sixSpaceList"></echarts-six-space>
+                        </div>
+                        <el-button type="primary" class="six-space-btn">结果</el-button>
+                    </div>
                 </div>
             </el-col>
         </el-row>
@@ -136,13 +245,15 @@
 import robotChat from '@/components/robotChat';
 import countItem from '@/components/countItem';
 import slideShow from '@/components/slideShow';
+import echartsRelation from '@/components/echartsRelation';
+import echartsSixSpace from '@/components/echartsSixSpace';
 export default {
     components:{
-        robotChat,countItem,slideShow
+        robotChat,countItem,slideShow,echartsRelation,echartsSixSpace
     },
     data(){
         return{
-            searchVal:'信用卡',
+            searchVal:'谢霆锋',
             robotShow:false,
             tabList:["全部","智能问答","思维导图","内容精选","金融标签","其他重要分类项"],
             tabIndex:0,
@@ -277,7 +388,69 @@ export default {
                     buttonName:"18%",
                     buttonColor:"green"
                 }
-            ]
+            ],
+            businessTabIndex:0,
+            businessStyleList:[
+                {
+                    value:"员工渠道",
+                    background:"blue"
+                },
+                {
+                    value:"网点wifi",
+                    background:"blue"
+                },
+                {
+                    value:"双录云",
+                    background:"green"
+                },
+                {
+                    value:"裕农通",
+                    background:"blue"
+                },
+                {
+                    value:"湖北省医疗平台",
+                    background:"green"
+                },
+                {
+                    value:"安心养老",
+                    background:"blue"
+                },
+                {
+                    value:"大厅致胜",
+                    background:"blue"
+                },
+                {
+                    value:"STM",
+                    background:"blue"
+                },
+                {
+                    value:"APP控制系统",
+                    background:"blue"
+                },
+                {
+                    value:"天津客户大屏",
+                    background:"green"
+                },
+                {
+                    value:"退役军人系统",
+                    background:"green"
+                },
+                {
+                    value:"员工渠道",
+                    background:"blue"
+                },
+                {
+                    value:"网点wifi",
+                    background:"blue"
+                },
+                {
+                    value:"双录云",
+                    background:"green"
+                }
+            ],
+            changeSelectList:[],
+            sixSpaceList:[],
+            isPerson:true
         }
     },
     methods:{
@@ -317,6 +490,22 @@ export default {
             this.tagIndex++;
             if(this.tagIndex==this.tagList.length){
                 this.tagIndex=0;
+            }
+        },
+        businessTabClick(index){
+            this.businessTabIndex=index;
+        },
+        changeSelectName(arr){
+            this.changeSelectList=arr;
+        },
+        makeComparison(){
+            this.sixSpaceList=this.changeSelectList;
+        },
+        searchContent(){
+            if(this.searchVal.indexOf("谢霆锋")>=0){
+                this.isPerson=true;
+            }else{
+                this.isPerson=false;
             }
         }
     },
@@ -600,7 +789,7 @@ export default {
             }
         }
         #searchBox-content-right{
-            ul{
+            .searchBox-content-right-list{
                 margin: 0;
                 padding: 0 !important; 
                 li{
@@ -632,7 +821,176 @@ export default {
                     border-left: 2px solid #1B94FF;
                 }
             }
-            
+            #business-style{
+                position: relative;
+                .business-style-tab{
+                    margin: 60px 0 0 0;
+                    padding: 0;
+                    list-style: none;
+                    height: 20px;
+                    padding: 10px 0;
+                    color: #ADBADA;
+                    border-bottom: 1px solid #289BFF;
+                    li{
+                        float: left;
+                        width: calc(20% - 1px);
+                        border-right: 1px solid #ccc;
+                        text-align: center;
+                        height: 20px;
+                        line-height: 20px;
+                        position: relative;
+                        font-size: 14px;
+                        cursor: pointer;
+                    }
+                    li:nth-last-child(1){
+                        border:none;
+                    }
+                    li.active{
+                        background: #289BFF;
+                        color: #FFF;
+                        border-radius: 6px 6px 0 0;
+                        border:none;
+                        height: 40px;
+                        line-height: 40px;
+                        margin-top: -10px;
+                        width: calc(20% - 10px);
+                        margin-right: 10px;
+                        margin-left: -1px;
+                    }
+                    li.active::after{
+                        content: "";
+                        position: absolute;
+                        display: inline-block;
+                        width: 0;
+                        height: 0;
+                        border-left: 10px solid #289BFF;
+                        border-top: 40px solid transparent;
+                        top: 0px;
+                        right: -9px;
+                    }
+                }
+                .business-style-list{
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    background: #202333;
+                    height: 300px;
+                    overflow: hidden;
+                    padding: 30px 10px 50px 10px;
+                    color: #fff;
+                    li{
+                        float: left;
+                        margin: 10px;
+                        position: relative;
+                        border-radius: 6px;
+                        .item-value{
+                            padding: 10px 20px;
+                        }
+                        .border-base1{
+                            width: calc(100% - 2px);
+                            height: 10px;
+                            background: #202333;
+                            position: absolute;
+                            bottom: 1px;
+                            left: 1px;
+                            border-radius:0 0 6px 6px;
+                            z-index: 999;
+                        }
+                        .border-base2{
+                            width: 100%;
+                            height: 10px;
+                            background: #ccc;
+                            position: absolute;
+                            bottom: -2px;
+                            left: 0px;
+                            border-radius:0 0 6px 6px;
+                            z-index: 0;
+                        }
+                    }
+
+                    .background-blue{
+                        background: #20447F;
+                        .border-base1{
+                            background: #20447F;
+                        }
+                        .border-base2{
+                            background: #56ADFF;
+                        }
+                    }
+                    .background-green{
+                        background: #047883;
+                        .border-base1{
+                            background: #047883;
+                        }
+                        .border-base2{
+                            background: #00E8FF;
+                        }
+                    }
+                }
+                #business-more{
+                    border: 1px solid #ccc;
+                    height:20px;
+                    width: 40px;
+                    position: absolute;
+                    bottom:0;
+                    left: 50%;
+                    margin-left: -20px;
+                    border: none;
+                    background: url("/static/img/down.png") no-repeat center center #212534;
+                }
+            }
+            #relation-network{
+                margin-top: 50px;
+                height: 500px;
+                width: 100%;
+                background: #202333;
+                border-top: 1px solid #2AABFF;
+                position: relative;
+                p{
+                    font-size: 16px;
+                    color: #FFF;
+                    height: 30px;
+                    line-height: 30px;
+                    text-indent: 20px;
+                }
+                .relation-network-content{
+                    width: 100%;
+                    height: calc(100% - 30px);
+                }
+                .relation-network-btn{
+                    position: absolute;
+                    bottom: 10px;
+                    left: calc(50% - 100px);
+                    width: 200px;
+                    background: #202433;
+                    color: #289BFF;
+                }
+            }
+            #six-space{
+                margin-top: 50px;
+                height: 500px;
+                width: 100%;
+                background: #202333;
+                border-top: 1px solid #2AABFF;
+                position: relative;
+                p{
+                    font-size: 16px;
+                    color: #FFF;
+                    height: 30px;
+                    line-height: 30px;
+                    text-indent: 20px;
+                }
+                .six-space-content{
+                    width: 100%;
+                    height: calc(100% - 30px);
+                }
+                .six-space-btn{
+                    position: absolute;
+                    bottom: 10px;
+                    left: calc(50% - 100px);
+                    width: 200px;
+                }
+            }
         }
         &:last-child {
             margin-bottom: 0;
@@ -964,6 +1322,136 @@ export default {
         li:hover{
             background: #666;
         }
+    }
+}
+#profile{
+    height:215px;
+    .profile-logo{
+        float: left;
+        width: 150px;
+        height: calc(100% - 40px);
+        margin: 20px 15px;
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .profile-content{
+        color: #FFF;
+        float: left;
+        width: calc(100% - 180px);
+        height: 100%;
+        .profile-content-name{
+            font-size: 18px;
+            margin-bottom: 12px;
+            font-weight: 600
+        }
+        .profile-content-info{
+            margin: 0;
+            font-size: 14px;
+            span{
+                display: inline-block; 
+            }
+            span:nth-child(odd){
+                width: 30%;
+            }
+            span:nth-child(even){
+                width: 69%;
+            }
+        }
+        .profile-content-des{
+            font-size: 14px;
+            margin-right: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;  // 控制多行的行数
+            -webkit-box-orient: vertical;
+        }
+    }
+}
+#person-select{
+    list-style: none;
+    color: #FFF;
+    margin: 0;
+    padding: 0;
+    li{
+        width: 31%;
+        margin: 10px 1%;
+        float: left;
+        height: 50px;
+        line-height: 50px;
+        font-size: 12px;
+        text-indent: 5px;
+        background: #292F40;
+    }
+    li:hover{
+        background: #666;
+    }
+}
+#similar-person{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li{
+        height:215px;
+        .person-logo{
+            float: left;
+            width: 150px;
+            height: calc(100% - 40px);
+            margin: 20px 15px;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .person-content{
+            color: #FFF;
+            float: left;
+            width: calc(100% - 180px);
+            height: 100%;
+            .person-content-name{
+                font-size: 18px;
+                margin-bottom: 12px;
+                font-weight: 600
+            }
+            .person-content-info{
+                margin: 0;
+                font-size: 14px;
+                span{
+                    display: inline-block; 
+                }
+                span:nth-child(odd){
+                    width: 30%;
+                }
+                span:nth-child(even){
+                    width: 69%;
+                }
+            }
+            .person-content-des{
+                font-size: 14px;
+                margin-right: 20px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 5;  // 控制多行的行数
+                -webkit-box-orient: vertical;
+            }
+        }
+    }
+    li:nth-last-child(1){
+        margin-bottom: 100px;
+    }
+    #person-more{
+        border: 1px solid #ccc;
+        height:20px;
+        width: 40px;
+        position: absolute;
+        bottom:0px;
+        left: 50%;
+        margin-left: -20px;
+        border: none;
+        background: url("/static/img/down.png") no-repeat center center #212534;
     }
 }
 </style>

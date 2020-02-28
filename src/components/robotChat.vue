@@ -313,6 +313,7 @@ export default {
             .content-item-right{
                 width: 100%;
                 min-height:100px; 
+                overflow: hidden;
                 .content-item-logo{
                     width: 70px;
                     height: 70px;

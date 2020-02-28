@@ -16,7 +16,15 @@ import xieTingFeng from "../../static/img/xietingfeng.png";
 import zhuLiQian from "../../static/img/zhuliqian.png";
 
 export default {
-  name: "personRelation",
+  name: "sixSpace",
+  props:{
+      sixSpaceList:{
+          type:Array,
+          default(){
+            return ["谢霆锋","朱丽倩"]
+          }
+      }
+    },
   data() {
     return {
       myChart: null,
@@ -32,8 +40,7 @@ export default {
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${zhuLiQian}`,
+          }
         },
         // {
         //   name: "徐贱云",
@@ -45,6 +52,7 @@ export default {
           name: "刘德华",
           category: 1,
           draggable: true,
+          symbolSize: 100,
           itemStyle: {
             normal: {
               borderColor: "#E1CD0C",
@@ -53,8 +61,7 @@ export default {
               shadowColor: "#E1CD0C",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${xieTingFeng}`,
+          }
         },
         {
           name: "邓志荣",
@@ -68,8 +75,7 @@ export default {
               shadowColor: "#6AF5F5",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${zhuLiQian}`,
+          }
         },
         {
           name: "李荣庆",
@@ -83,8 +89,7 @@ export default {
               shadowColor: "#1C5AFE",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${xieTingFeng}`,
+          }
         },
         {
           name: "郑志勇",
@@ -98,8 +103,7 @@ export default {
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${zhuLiQian}`,
+          }
         },
         {
           name: "赵英杰",
@@ -113,8 +117,7 @@ export default {
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${xieTingFeng}`,
+          }
         },
         {
           name: "王承军",
@@ -128,8 +131,7 @@ export default {
               shadowColor: "#BF169C",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${zhuLiQian}`,
+          }
         },
         {
           name: "陈卫东",
@@ -143,8 +145,7 @@ export default {
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${xieTingFeng}`,
+          }
         },
         {
           name: "邹劲松",
@@ -158,8 +159,7 @@ export default {
               shadowColor: "#6AF5F5",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${zhuLiQian}`,
+          }
         },
         {
           name: "赵成",
@@ -173,8 +173,7 @@ export default {
               shadowColor: "#1C5AFE",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${zhuLiQian}`,
+          }
         },
         {
           name: "陈现忠",
@@ -188,8 +187,7 @@ export default {
               shadowColor: "#1C5AFE",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${xieTingFeng}`,
+          }
         },
         {
           name: "陶泳",
@@ -203,8 +201,7 @@ export default {
               shadowColor: "#6AF5F5",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${zhuLiQian}`,
+          }
         },
         {
           name: "王德福",
@@ -218,8 +215,7 @@ export default {
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
-          },
-          symbol: `image://${xieTingFeng}`,
+          }
         }
       ],
       chartLink: [
@@ -304,39 +300,16 @@ export default {
       attrValue: "我是属性框",
       series: "",
       option:"",
-      selectNum:0,
-      lastSelectName:[]
+      radius:"30"
     };
   },
   mounted() {
-    this.setRelationSeries();
-    console.log(222)
+    this.setSixSeries();
     this.initEchart();
   },
   methods: {
     initEchart() {
       this.myChart = echarts.init(this.$el);
-      // let dom = document.getElementById("container");
-      // this.myChart = echarts.init(dom);
-      // let option = {
-      //   backgroundColor: "#2c343c",
-      //   title: {
-      //     text: ""
-      //   },
-      //   tooltip: {},
-      //   animationDurationUpdate: 1500,
-      //   animationEasingUpdate: "quinticInOut",
-      //   label: {
-      //     normal: {
-      //       show: true,
-      //       textStyle: {
-      //         fontSize: 12
-      //       }
-      //     }
-      //   },
-
-      //   series: this.series
-      // };
       this.myChart.setOption(this.option);
       let timeout;
       this.myChart.on("click", params => {
@@ -344,92 +317,14 @@ export default {
         timeout = setTimeout(() => {
           this.attrShow = true;
           this.attrValue = params.data.name;
-          console.log(params);
-          let _option=this.myChart.getOption();
-          _option.series[0].data.forEach((item,index)=>{
-            if(item.name==params.data.name){
-              let isExist=false;
-              for(let i=0;i<this.lastSelectName.length;i++){
-                if(this.lastSelectName[i]==params.data.name){
-                  isExist=true;
-                }
-              }
-              if(!isExist){
-                this.selectNum++;
-              }
-              if(this.selectNum<=3){
-                if(!isExist){
-                  this.lastSelectName.push(item.name);
-                }
-              }else{
-                if(!isExist){
-                  this.lastSelectName[0]=this.lastSelectName[1];
-                  this.lastSelectName[1]=this.lastSelectName[2];
-                  this.lastSelectName[2]=item.name;
-                }
-              }
-              console.log(this.lastSelectName);
-            }
-            _option.series[0].data.forEach((temp,tempIndex)=>{
-              if(this.selectNum<=2){
-                if(temp.name==this.lastSelectName[0]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }else if(temp.name==this.lastSelectName[1]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }else if(temp.name==this.lastSelectName[2]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }
-              }else{
-                if(temp.name==this.lastSelectName[0]){
-                  _option.series[0].data[tempIndex].symbolSize=50;
-                }else if(temp.name==this.lastSelectName[1]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }else if(temp.name==this.lastSelectName[2]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }
-              }
-            })
-            this.myChart.setOption(_option);
-          })
-          if(this.selectNum>=2){
-            this.$emit("changeSelectName",[this.lastSelectName[0],this.lastSelectName[1]])
-          }
-          // _option.series[0].data.forEach((item,index)=>{
-          //   if(item.name==params.data.name){
-          //     let isExist=false;
-          //     for(let i=0;i<this.lastSelectName.length;i++){
-          //       if(this.lastSelectName[i]==params.name){
-          //         isExist=true
-          //       }
-          //     }
-          //     if(!isExist){
-          //       this.lastSelectName.push(params.name);
-          //     }
-          //     console.log(this.lastSelectName);
-          //     this.selectNum++;
-          //     console.log(this.selectNum);
-          //     if(this.selectNum>2){
-          //       this.lastSelectName[0]=this.lastSelectName[1];
-          //       this.lastSelectName[1]=this.lastSelectName[2];
-          //       this.lastSelectName[2]=""
-          //       _option.series[0].data.forEach((temp,tempIndex)=>{
-          //         if(temp.name==this.lastSelectName[this.selectNum-2]){
-          //           _option.series[0].data[tempIndex].symbolSize=60;
-          //         }
-          //       })
-          //     }
-          //     _option.series[0].data[index].symbolSize=100;
-          //     this.myChart.setOption(_option);
-          //   }
-          //})
         }, 500);
       });
-      // this.myChart.on("dblclick", params => {
-      //   console.log(params.data); //获取点击的头像的数据信息
-      //   clearTimeout(timeout);
-      //   this.setSixSeries();
-      //   this.initEchart();
-      // });
+      this.myChart.on("dblclick", params => {
+        console.log(params.data); //获取点击的头像的数据信息
+        clearTimeout(timeout);
+        this.setSixSeries();
+        this.initEchart();
+      });
     },
     closeAttrBox() {
       this.attrShow = false;
@@ -456,7 +351,7 @@ export default {
           {
             type: "graph",
             layout: "force",
-            symbolSize: 50,
+            symbolSize: 60,
             focusNodeAdjacency: true,
             roam: true,
             categories: [
@@ -488,16 +383,14 @@ export default {
             label: {
               normal: {
                 show: true,
-                position: "bottom",
                 textStyle: {
-                  fontSize: 16
-                },
-                color:"#FFF"
+                  fontSize: 12
+                }
               }
             },
             force: {
-              repulsion: 400, //子节点间距离
-              edgeLength: [20, 100], //连线长度
+              repulsion: 500, //子节点间距离
+              edgeLength: [20, 200], //连线长度
               layoutAnimation: true,
               gravity: 0,
               initLayout: "circular"
@@ -528,20 +421,29 @@ export default {
     setSixSeries() {
       this.option = {
         backgroundColor: "#2c343c",
+        // itemStyle: {
+        //   normal: {
+        //     color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+        //       {
+        //         offset: 0,
+        //         color: "#157eff"
+        //       },
+        //       {
+        //         offset: 1,
+        //         color: "#35c2ff"
+        //       }
+        //     ])
+        //   },
+        //   shadowBlur: 10
+        // },
         itemStyle: {
-          normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-              {
-                offset: 0,
-                color: "#157eff"
-              },
-              {
-                offset: 1,
-                color: "#35c2ff"
-              }
-            ])
-          },
-          shadowBlur: 10
+            normal: {
+              borderColor: "#E1CD0C",
+              borderWidth: 4,
+              shadowBlur: 100,
+              shadowColor: "#E1CD0C",
+              color: "#000E65",
+            }
         },
         textStyle: {
           color: "#333",
@@ -569,14 +471,15 @@ export default {
             edgeSymbolSize: [2, 15],
             focusNodeAdjacency: true,
             roam: true,
-            symbolSize: 80,
+            symbolSize: this.radius*0.8,
             //圆形上面的文字
             label: {
               normal: {
-                position: "inside",
+                //position: "inside",
+                position: "bottom",
                 show: true,
                 textStyle: {
-                  fontSize: 16
+                  fontSize: 12
                 },
                 color:"#FFF"
               }
@@ -607,7 +510,7 @@ export default {
               normal: {
                 show:true,
                 textStyle: {
-                    fontSize: 16
+                    fontSize: 12
                 },
                 formatter: "{c}",
                 color:"#fff"
@@ -615,8 +518,8 @@ export default {
             },
             data: [
               {
-                name: "谢霆锋",
-                symbolSize: 100,
+                name: this.sixSpaceList[0],
+                symbolSize: this.radius,
                 draggable: false,
                 fixed: true,
                 value: [20, 150],
@@ -637,8 +540,8 @@ export default {
                 },
               },
               {
-                name: "朱丽倩",
-                symbolSize: 100,
+                name: this.sixSpaceList[1],
+                symbolSize: this.radius,
                 draggable: false,
                 value: [470, 150],
                 symbol: `image://${zhuLiQian}`,
@@ -671,11 +574,11 @@ export default {
                         shadowColor: "orange",
                         color: "#962717"
                     }
-                }
+                },
+                symbol: `image://${xieTingFeng}`,
               },
               {
                 name: "张柏芝",
-                symbolSize: 80,
                 draggable: false,
                 value: [320, 270],
                 id:"4",
@@ -687,7 +590,8 @@ export default {
                         shadowColor: "orange",
                         color: "#962717"
                     }
-                }
+                },
+                symbol: `image://${zhuLiQian}`,
               },
               {
                 name: "陈冠希",
@@ -702,11 +606,11 @@ export default {
                       shadowColor: "#6AF5F5",
                       color: "#2c343c",
                     }
-                }
+                },
+                symbol: `image://${xieTingFeng}`,
               },
               {
                 name: "郑秀文",
-                symbolSize: 80,
                 draggable: false,
                 value: [320, 210],
                 id:"6",
@@ -718,7 +622,8 @@ export default {
                       shadowColor: "#6AF5F5",
                       color: "#2c343c",
                     }
-                }
+                },
+                symbol: `image://${zhuLiQian}`,
               },
               {
                 name: "容祖儿",
@@ -733,11 +638,11 @@ export default {
                       shadowColor: "#1C5AFE",
                       color: "#000E65",
                     }
-                }
+                },
+                symbol: `image://${xieTingFeng}`,
               },
               {
                 name: "陈奕迅",
-                symbolSize: 80,
                 draggable: false,
                 value: [320, 150],
                 id:"8",
@@ -749,7 +654,8 @@ export default {
                       shadowColor: "#1C5AFE",
                       color: "#000E65",
                     }
-                }
+                },
+                symbol: `image://${zhuLiQian}`,
               },
               {
                 name: "谢振轩",
@@ -764,11 +670,11 @@ export default {
                       shadowColor: "#9C18A8",
                       color: "#520168",
                     }
-                }
+                },
+                symbol: `image://${xieTingFeng}`,
               },
               {
                 name: "张柏芝",
-                symbolSize: 80,
                 draggable: false,
                 value: [320, 90],
                 id:"10",
@@ -780,7 +686,8 @@ export default {
                       shadowColor: "#9C18A8",
                       color: "#520168",
                     }
-                }
+                },
+                symbol: `image://${zhuLiQian}`,
               },
               {
                 name: "张卫健",
@@ -795,11 +702,11 @@ export default {
                       shadowColor: "#E1CD0C",
                       color: "#000E65",
                     }
-                }
+                },
+                symbol: `image://${xieTingFeng}`,
               },
               {
                 name: "林心如",
-                symbolSize: 80,
                 draggable: false,
                 value: [320, 30],
                 id:"12",
@@ -811,7 +718,8 @@ export default {
                       shadowColor: "#E1CD0C",
                       color: "#000E65",
                     }
-                }
+                },
+                symbol: `image://${zhuLiQian}`,
               },
             ],
 
@@ -974,7 +882,7 @@ export default {
         ]
       };
     }
-  }
+  },
 };
 </script>
 
