@@ -1,5 +1,5 @@
 <template>
-  <div class="echartLayout">
+  <div class="echartLayout" :style="`width:${width};height:${height}`">
     <div class="container"></div>
     <div class="attrBox" v-show="attrShow">
       <p>
@@ -18,13 +18,21 @@ import zhuLiQian from "../../static/img/zhuliqian.png";
 export default {
   name: "sixSpace",
   props:{
-      sixSpaceList:{
-          type:Array,
-          default(){
-            return ["谢霆锋","朱丽倩"]
-          }
-      }
+    sixSpaceList:{
+        type:Array,
+        default(){
+          return ["谢霆锋","朱丽倩"]
+        }
     },
+    width:{
+        type:String,
+        default:"100%"
+    },
+    height:{
+        type:String,
+        default:"100%"
+    }
+  },
   data() {
     return {
       myChart: null,
@@ -304,7 +312,7 @@ export default {
     };
   },
   mounted() {
-    this.setSixSeries();
+    this.setSixSeries(this.sixSpaceList);
     this.initEchart();
   },
   methods: {
@@ -319,12 +327,12 @@ export default {
           this.attrValue = params.data.name;
         }, 500);
       });
-      this.myChart.on("dblclick", params => {
-        console.log(params.data); //获取点击的头像的数据信息
-        clearTimeout(timeout);
-        this.setSixSeries();
-        this.initEchart();
-      });
+      // this.myChart.on("dblclick", params => {
+      //   console.log(params.data); //获取点击的头像的数据信息
+      //   clearTimeout(timeout);
+      //   this.setSixSeries();
+      //   this.initEchart();
+      // });
     },
     closeAttrBox() {
       this.attrShow = false;
@@ -418,7 +426,7 @@ export default {
         ]
       };
     },
-    setSixSeries() {
+    setSixSeries(list) {
       this.option = {
         backgroundColor: "#2c343c",
         // itemStyle: {
@@ -518,7 +526,7 @@ export default {
             },
             data: [
               {
-                name: this.sixSpaceList[0],
+                name: list[0],
                 symbolSize: this.radius,
                 draggable: false,
                 fixed: true,
@@ -540,7 +548,7 @@ export default {
                 },
               },
               {
-                name: this.sixSpaceList[1],
+                name: list[1],
                 symbolSize: this.radius,
                 draggable: false,
                 value: [470, 150],
@@ -881,6 +889,12 @@ export default {
           }
         ]
       };
+    }
+  },
+  watch: {
+    sixSpaceList(a,b){
+      this.setSixSeries(this.sixSpaceList);
+      this.initEchart();
     }
   },
 };

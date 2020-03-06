@@ -1,5 +1,5 @@
 <template>
-  <div class="echartLayout">
+  <div class="echartLayout" :style="`width:${width};height:${height}`">
     <div class="container"></div>
     <div class="attrBox" v-show="attrShow">
       <p>
@@ -17,6 +17,16 @@ import zhuLiQian from "../../static/img/zhuliqian.png";
 
 export default {
   name: "personRelation",
+  props:{
+    width:{
+        type:String,
+        default:"100%"
+    },
+    height:{
+        type:String,
+        default:"100%"
+    }
+  },
   data() {
     return {
       myChart: null,
@@ -27,8 +37,8 @@ export default {
           itemStyle: {
             normal: {
               borderColor: "#59D69A",
-              borderWidth: 4,
-              shadowBlur: 100,
+              borderWidth: 20,
+              shadowBlur: 15,
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
@@ -49,7 +59,7 @@ export default {
             normal: {
               borderColor: "#E1CD0C",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#E1CD0C",
               color: "#2c343c"
             }
@@ -64,7 +74,7 @@ export default {
             normal: {
               borderColor: "#6AF5F5",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#6AF5F5",
               color: "#2c343c"
             }
@@ -79,7 +89,7 @@ export default {
             normal: {
               borderColor: "#1C5AFE",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#1C5AFE",
               color: "#2c343c"
             }
@@ -94,7 +104,7 @@ export default {
             normal: {
               borderColor: "#59D69A",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
@@ -109,7 +119,7 @@ export default {
             normal: {
               borderColor: "#59D69A",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
@@ -124,7 +134,7 @@ export default {
             normal: {
               borderColor: "#BF169C",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#BF169C",
               color: "#2c343c"
             }
@@ -139,7 +149,7 @@ export default {
             normal: {
               borderColor: "#59D69A",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
@@ -154,7 +164,7 @@ export default {
             normal: {
               borderColor: "#6AF5F5",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#6AF5F5",
               color: "#2c343c"
             }
@@ -169,7 +179,7 @@ export default {
             normal: {
               borderColor: "#1C5AFE",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#1C5AFE",
               color: "#2c343c"
             }
@@ -184,7 +194,7 @@ export default {
             normal: {
               borderColor: "#1C5AFE",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#1C5AFE",
               color: "#2c343c"
             }
@@ -199,7 +209,7 @@ export default {
             normal: {
               borderColor: "#6AF5F5",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#6AF5F5",
               color: "#2c343c"
             }
@@ -214,7 +224,7 @@ export default {
             normal: {
               borderColor: "#59D69A",
               borderWidth: 4,
-              shadowBlur: 100,
+              shadowBlur: 15,
               shadowColor: "#59D69A",
               color: "#2c343c"
             }
@@ -344,85 +354,26 @@ export default {
         timeout = setTimeout(() => {
           this.attrShow = true;
           this.attrValue = params.data.name;
-          console.log(params);
           let _option=this.myChart.getOption();
           _option.series[0].data.forEach((item,index)=>{
             if(item.name==params.data.name){
-              let isExist=false;
-              for(let i=0;i<this.lastSelectName.length;i++){
-                if(this.lastSelectName[i]==params.data.name){
-                  isExist=true;
-                }
-              }
-              if(!isExist){
-                this.selectNum++;
-              }
-              if(this.selectNum<=3){
-                if(!isExist){
-                  this.lastSelectName.push(item.name);
+              if(params.data.symbolSize==80){
+                for(let i=0;i<this.lastSelectName.length;i++){
+                  if(this.lastSelectName[i]==params.data.name){
+                    this.lastSelectName.splice(i,1);
+                    _option.series[0].data[index].symbolSize=50;
+                  }
                 }
               }else{
-                if(!isExist){
-                  this.lastSelectName[0]=this.lastSelectName[1];
-                  this.lastSelectName[1]=this.lastSelectName[2];
-                  this.lastSelectName[2]=item.name;
-                }
+                this.lastSelectName.push(item.name);
+                _option.series[0].data[index].symbolSize=80;
               }
-              console.log(this.lastSelectName);
+              console.log(this.lastSelectName)
+              this.myChart.setOption(_option);
+              this.$emit("changeSelectName",this.lastSelectName);
             }
-            _option.series[0].data.forEach((temp,tempIndex)=>{
-              if(this.selectNum<=2){
-                if(temp.name==this.lastSelectName[0]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }else if(temp.name==this.lastSelectName[1]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }else if(temp.name==this.lastSelectName[2]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }
-              }else{
-                if(temp.name==this.lastSelectName[0]){
-                  _option.series[0].data[tempIndex].symbolSize=50;
-                }else if(temp.name==this.lastSelectName[1]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }else if(temp.name==this.lastSelectName[2]){
-                  _option.series[0].data[tempIndex].symbolSize=80;
-                }
-              }
-            })
-            this.myChart.setOption(_option);
           })
-          if(this.selectNum>=2){
-            this.$emit("changeSelectName",[this.lastSelectName[0],this.lastSelectName[1]])
-          }
-          // _option.series[0].data.forEach((item,index)=>{
-          //   if(item.name==params.data.name){
-          //     let isExist=false;
-          //     for(let i=0;i<this.lastSelectName.length;i++){
-          //       if(this.lastSelectName[i]==params.name){
-          //         isExist=true
-          //       }
-          //     }
-          //     if(!isExist){
-          //       this.lastSelectName.push(params.name);
-          //     }
-          //     console.log(this.lastSelectName);
-          //     this.selectNum++;
-          //     console.log(this.selectNum);
-          //     if(this.selectNum>2){
-          //       this.lastSelectName[0]=this.lastSelectName[1];
-          //       this.lastSelectName[1]=this.lastSelectName[2];
-          //       this.lastSelectName[2]=""
-          //       _option.series[0].data.forEach((temp,tempIndex)=>{
-          //         if(temp.name==this.lastSelectName[this.selectNum-2]){
-          //           _option.series[0].data[tempIndex].symbolSize=60;
-          //         }
-          //       })
-          //     }
-          //     _option.series[0].data[index].symbolSize=100;
-          //     this.myChart.setOption(_option);
-          //   }
-          //})
-        }, 500);
+        }, 300);
       });
       // this.myChart.on("dblclick", params => {
       //   console.log(params.data); //获取点击的头像的数据信息
@@ -626,7 +577,7 @@ export default {
                     normal: {
                       borderColor: "#fff",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#fff",
                     }
                 },
@@ -647,7 +598,7 @@ export default {
                     normal: {
                       borderColor: "#fff",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#fff",
                     }
                 },
@@ -667,7 +618,7 @@ export default {
                     normal: {
                         borderColor: "orange",
                         borderWidth: 4,
-                        shadowBlur: 100,
+                        shadowBlur: 15,
                         shadowColor: "orange",
                         color: "#962717"
                     }
@@ -683,7 +634,7 @@ export default {
                     normal: {
                         borderColor: "orange",
                         borderWidth: 4,
-                        shadowBlur: 100,
+                        shadowBlur: 15,
                         shadowColor: "orange",
                         color: "#962717"
                     }
@@ -698,7 +649,7 @@ export default {
                     normal: {
                       borderColor: "#6AF5F5",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#6AF5F5",
                       color: "#2c343c",
                     }
@@ -714,7 +665,7 @@ export default {
                     normal: {
                       borderColor: "#6AF5F5",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#6AF5F5",
                       color: "#2c343c",
                     }
@@ -729,7 +680,7 @@ export default {
                     normal: {
                       borderColor: "#1C5AFE",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#1C5AFE",
                       color: "#000E65",
                     }
@@ -745,7 +696,7 @@ export default {
                     normal: {
                       borderColor: "#1C5AFE",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#1C5AFE",
                       color: "#000E65",
                     }
@@ -760,7 +711,7 @@ export default {
                     normal: {
                       borderColor: "#9C18A8",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#9C18A8",
                       color: "#520168",
                     }
@@ -776,7 +727,7 @@ export default {
                     normal: {
                       borderColor: "#9C18A8",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#9C18A8",
                       color: "#520168",
                     }
@@ -791,7 +742,7 @@ export default {
                     normal: {
                       borderColor: "#E1CD0C",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#E1CD0C",
                       color: "#000E65",
                     }
@@ -807,7 +758,7 @@ export default {
                     normal: {
                       borderColor: "#E1CD0C",
                       borderWidth: 4,
-                      shadowBlur: 100,
+                      shadowBlur: 15,
                       shadowColor: "#E1CD0C",
                       color: "#000E65",
                     }
@@ -980,8 +931,8 @@ export default {
 
 <style scoped lang="scss">
 .echartLayout {
-  height: calc(100% - 100px);
-  width: 90%;
+  height: 100%;
+  width: 100%;
   margin: auto;
   // position: absolute;
   // top: 100px;

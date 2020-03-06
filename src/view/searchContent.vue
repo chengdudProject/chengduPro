@@ -22,9 +22,9 @@
                 <div class="right-dot"></div>
             </div>
         </div>
-        <el-row :gutter="100" id="searchBox-content">
-            <el-col :span="14" id="searchBox-content-left">
-                <div class="grid-content">
+        <el-row :gutter="0" id="searchBox-content">
+            <el-col :span="13" id="searchBox-content-left">
+                <div class="grid-content"> 
                     <p>计算结果</p>
                     <div class="grid-content-detail" v-show="!isPerson">
                         <count-item countTitle="智能计算" countTitleDes="仅显示该问题的智能计算的内容" countTitleColor="#4FADFF">
@@ -199,7 +199,43 @@
                     </div>
                 </div>
             </el-col>
-            <el-col :span="10" id="searchBox-content-right">
+            <el-col :span="2" id="searchBox-middle">
+                <task-work-area
+                    :id="work_id" 
+                    :ini="ini_config" 
+                    ref="area"
+                    >
+                    <task-curve-path 
+                        :areaid="work_id" 
+                        :paths="paths" 
+                        ref="curve" 
+                        >
+                    </task-curve-path>
+                    <template v-for="node in nodes">
+                        <task-common-node 
+                            :key="node.id" 
+                            :node="node" 
+                            v-on:on-drag-start="dragStart" 
+                            v-on:on-drag-ging="dragGing" 
+                            v-on:on-drag-end="dragEnd" 
+                            :updateTem="updateCompleted" 
+                            >
+                        </task-common-node>
+                    </template>
+                    <task-initial-node 
+                        :node="initialData" 
+                        backgroundColor="#ff5722" 
+                        v-on:on-add-path="addPath" 
+                        v-on:on-select="selectlMethod" 
+                        v-on:on-drag-start="dragStart" 
+                        v-on:on-drag-ging="dragGing" 
+                        v-on:on-drag-end="dragEnd" 
+                        :updateTem="updateCompleted" 
+                        >
+                    </task-initial-node>
+                </task-work-area>
+            </el-col>
+            <el-col :span="9" id="searchBox-content-right">
                 <div class="grid-content">
                     <p v-show="!isPerson">主要学习来源</p>
                     <ul class="searchBox-content-right-list" v-show="!isPerson">
@@ -258,6 +294,60 @@ export default {
             tabList:["全部","智能问答","思维导图","内容精选","金融标签","其他重要分类项"],
             tabIndex:0,
             linkIndex:1,
+            modelnodes: [{
+                id:1,
+                name: 'node1',
+                children: [{
+                    id:2,
+                    name: 'node2',
+                    children: []
+                }, {
+                    id: 3,
+                    name: 'node3',
+                    children: []
+                }]
+            }],
+            initialData: {
+                id: 'node4',
+                name: '节点4',
+                positionX:30,
+                positionY: 60,
+                inPorts: [],
+                outPorts: [{
+                    id:'node4_1'
+                }]
+            },
+            nodes: [{
+                id: 'node1',
+                name: '节点1',
+                positionX: 110,
+                positionY: 50,
+                state: 'success',
+                inPorts: [],
+                outPorts: [{
+                    id: 'node1_1'
+                }]
+            }, {
+                id: 'node2',
+                name: '节点2',
+                positionX: 20,
+                positionY: 300,
+                state: 'success',
+                outPorts: [{
+                    id: 'node2_4'
+                }]
+            }],
+            paths: [{
+                dotted: true,
+                ptype: 'Q',
+                startPort: 'node4_1',
+                endPort: 'node1_1'
+            }, {
+                dotted: false,
+                ptype: 'Q',
+                startPort: 'node4_1',
+                endPort: 'node2_4'
+            }],
             rightList:[
                 {
                     title:"医院可以刷信用卡么?",
@@ -507,7 +597,92 @@ export default {
             }else{
                 this.isPerson=false;
             }
-        }
+        },
+     
+        //连线方法
+        onAddNodeModel (event, node) {
+            console.log('添加节点', event.clientX, event.clientY, node)
+            let newNode = {}
+            newNode = node
+            newNode.id = 'node' + (this.dtl++)
+            newNode.positionX = node.positionX - 90 // -15 -90 定位到节点的终点
+            newNode.positionY = node.positionY - 15
+            newNode.outPorts = [{
+                id: newNode.id + '_' + Math.floor(Math.random() * 10)
+            }]
+            newNode.inPorts = []
+            this.nodes.push(newNode)
+            },
+            mouseFn (event, portData) {
+            console.log('mouseFn', 'on-mouse', '鼠标右击路径事件', event, portData)
+            },
+            mouseOverFn (event, portData) {
+            console.log('mouseFn', 'on-mouse-over', '鼠标划入路径事件', event, portData)
+            },
+            mouseOutFn (event, portData) {
+            console.log('mouseFn', 'on-mouse-out', '鼠标划出路径事件', event, portData)
+            },
+            selectlMethod: function (event, data, node) {
+            console.log('selectlMethod', 'on-select', '节点左键点击事件', event, data, node)
+            },
+            dragStart: function (event, node) {
+            let nodeData = event.dataTransfer.getData('nodedata')
+            console.log('节点开始移动', event.clientX, event.clientY, node, JSON.parse(nodeData))
+            this.startNode = {id: node.id, positionX: event.clientX, positionY: event.clientY}
+            },
+            dragEnd: function (event, node) {
+            console.log('节点移动结束', event.clientX, event.clientY, node)
+            let nodeXY = {}
+            nodeXY.x = event.clientX
+            nodeXY.y = event.clientY
+            let me = this
+            this.nodes.forEach(function (item) {
+                if (item.id === node.id) {
+                item.positionX = node.positionX + (nodeXY.x - me.startNode.positionX)
+                item.positionY = node.positionY + (nodeXY.y - me.startNode.positionY)
+                }
+            })
+            if (node.id === this.initialData.id) {
+                this.initialData.positionX = node.positionX + (nodeXY.x - me.startNode.positionX)
+                this.initialData.positionY = node.positionY + (nodeXY.y - me.startNode.positionY)
+            }
+            },
+            addPath: function (event, startData, endData) {
+            let me = this
+            console.log('添加路径', event, startData, endData)
+            this.nodes.forEach(function (item) {
+                item.inPorts.forEach(function (ins) {
+                if (ins.id === endData) {
+                    ins.isConnected = true
+                }
+                })
+            })
+            setTimeout(function () {
+                me.paths.push({
+                dotted: me.ini_config.isDotted,
+                ptype: me.ini_config.lineType,
+                startPort: startData,
+                endPort: endData
+                })
+            }, 200)
+            },
+            dragGing: function (event) {
+            console.log('节点移动中...', event.clientX, event.clientY)
+            },
+            updateCompleted: function () {
+            console.log('updateCompleted!!')
+            // 重新加载路径
+            this.$refs.curve.vReload()
+            },
+            mouseMenu: function (event, id) {
+            console.log('mouseMenu', 'on-mouse', '工作区右击事件', event, id)
+            },
+            mouseNodeMenu: function (event, node) {
+            console.log('mouseNodeMenu', 'on-mouse', '节点右击事件', event, node)
+            }
+
+
+
     },
     watch: {
         linkList() {//监听对话框内容，如果有新内容加入，自动滑到最底部

@@ -22,7 +22,7 @@ export default new Router({
       component: search
     },
     {
-      path: '/searchContent',
+      path: '/searchContent/:searchVal',
       name: 'searchContent',
       component: searchContent
     },

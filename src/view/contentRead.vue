@@ -6,13 +6,13 @@
                 <div id="searchBox-header-right-photo"></div>
                 <div class="right-dot"></div>
                 <div class="right-dot"></div>
-      </div>
+    </div>
     <div class="content">
-      <div class="content_title">内容精度</div>
-	    <div class="content_card">
-        <div class="card_title">{{title}}</div>
-        <div class="card_date">{{date}}</div>
-        <div :style="cardStyle(item.type)" v-for="(item) in cardInfo" :key="item.id">
+      <div class="content-title">内容精读</div>
+	    <div class="content-card">
+        <div class="card-title">{{title}}</div>
+        <div class="card-date">{{date}}</div>
+        <div :style="cardStyle(item.type)" v-for="(item) in cardInfo" :key="item.id" >
           {{item.article}}
         </div>
       </div>
@@ -37,7 +37,7 @@ export default {
   },
   data(){
     return{
-      pageName:'内容精度',
+      pageName:'内容精读',
       title: '信用卡取现',
       date: '创建时间： 2019年12月12日； 作者：刘茜茜',
       robotShow:false,
@@ -95,6 +95,14 @@ export default {
          article:'关于信用卡取现方法，持卡人只须登陆银行信用卡网上银行，选择预借现金功能，然后根据提示操作，从信用卡预借的现金就可直接打入个人借记卡账户'+
                   '操作极为简便。电话预借现金就是通过拨打银行信用卡客服热线，根据语音提示，将预借现金打入个人借记卡账户。'
         },
+      ],
+      cardCheck: [
+        {key:"持卡人"}, 
+        {key:"溢缴款取现"},
+        {key:"溢缴款"},
+        {key:"信用额度"},
+        {key:"预借现金"}, 
+        {key:"借记卡"}
       ]
     }
   },
@@ -105,7 +113,9 @@ export default {
         if(type == "middle") {return 'ffont-size: 14px;color: #222222;letter-spacing: 0;line-height: 20px;'};
         if(type == "small") {return 'font-size: 12px;color: #666666;letter-spacing: 0;line-height:20px;padding-bottom:20px'}
       }
-    }
+    },
+     
+    
   },
   methods: {
     toggleRobot(){
@@ -114,11 +124,28 @@ export default {
         changeRobotState(){
             this.robotShow=false;
         }
-  }
-
-
-  
-  
+  },
+//   filters: {
+//     checkStyle: function(value, cardCheck) {
+//           if(value && value.length > 0) {
+//             //匹配关键字正则
+//             for(var i=0; i<cardCheck[i].length; i++) {
+//             let replaceReg = new RegExp(cardCheck[i], "g");
+//             //高亮替换v-html值
+//             let replaceString = 
+//             '<span class="highlight"' +
+//             'style="color:blue;"' +
+//             '>' +
+//              cardCheck[i] +
+//             "</span>";
+//             vlaue = value.replace(
+//               replaceReg,
+//               replaceString
+//             )
+//           }
+//     }
+//     }
+//  } 
 }
 </script>
 <style lang="scss">
@@ -129,7 +156,8 @@ export default {
   position: relative;
   background: #F6F6F6;
   position: absolute;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   left: 0;
   margin: 0 auto;
   border: 1px solid #D0D0D0;
@@ -197,24 +225,24 @@ export default {
   top: 100px;
   margin: 0 auto;
 	position: absolute;
-	.content_title {
+	.content-title {
 		line-height: 41px;
 		font-size: 12px;
     color: #999999;
 		display: inline-block;
 		vertical-align: middle;
 	}
-	.content_card {
+	.content-card {
 		width: 60%;
 		min-height: 670px;
 		background: #FFFFFF;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
     padding: 26px 30px;
     overflow-y: scroll;
-    .card_title {
+    .card-title {
       font-size: 25px;
     }
-    .card_date {
+    .card-date {
       font-size: 12px;
       color: #999999;
       padding-top: 5px;
