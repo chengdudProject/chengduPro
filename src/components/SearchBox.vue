@@ -73,7 +73,7 @@
       p {
           //float: left
           padding-left: 220px;
-          padding-top: 30px;
+          padding-top: 15px;
           font-size: 18px;
           color: #289BFF;
           letter-spacing: 0;

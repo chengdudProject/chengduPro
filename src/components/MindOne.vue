@@ -190,7 +190,7 @@ import gojs, {Diagram} from '../components/gojs'
 	//width: 750px;
   //height: 450px;
   padding-left: 10%;
-  .myDiagramDiv canvas{
+  #myDiagramDiv>>>canvas{
     outline: none;
   }
 }
