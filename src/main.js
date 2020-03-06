@@ -7,9 +7,12 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'swiper/css/swiper.css'
 import echarts from 'echarts'
+import VueTaskNode from 'vue-task-node'
+import 'vue-task-node/dist/css/vnode.css'
 
 Vue.prototype.$echarts = echarts
 Vue.use(ElementUI)
+Vue.prototype.bus = new Vue()
 
 
 /* eslint-disable no-new */

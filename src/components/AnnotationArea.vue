@@ -84,6 +84,9 @@
         return value.slice(0,43) + "...";
 			}
 		},
+		mounted() {
+      
+		},
 		shareTo(stype) {
 			var stit = '';
 			var slink = '';

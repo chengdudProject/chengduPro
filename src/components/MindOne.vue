@@ -1,6 +1,7 @@
 <template>
 	<div class="mind-map">
-   <div class="myDiagramDiv" id="myDiagramDiv" style="border: 1px solid white; width: 499px; height: 352px; position: relative; cursor: auto;">
+   <div class="myDiagramDiv" id="myDiagramDiv" style="border: 1px solid white; width: 499px; height: 352px; position: relative; cursor: auto;  border: 0px;
+    outline: none;">
 	 </div>
    
      <span id="overviewSpan" style="display: inline-block; vertical-align: top;">
@@ -9,7 +10,8 @@
 </template>
 
 <script>
-import gojs, { Diagram } from 'gojs'
+//import gojs, { Diagram } from 'gojs'
+import gojs, {Diagram} from '../components/gojs'
 	export default {
 		data(){
     return{
@@ -19,24 +21,24 @@ import gojs, { Diagram } from 'gojs'
       mindNode: 
         { "class": "go.TreeModel",
           "nodeDataArray": [
-          {"key":0, "text":"建行信用卡", "brush":"white", "loc":"-400 50"},
-          {"key":1, "parent":0, "text":"申请", "brush":"blue", "dir":"right", "loc":"-300 -50"},
-          {"key":2, "parent":0, "text":"开卡", "brush":"coral", "dir":"right", "loc":"-300 -10"},
-          {"key":21, "parent":2, "text":"电话开卡", "brush":"coral", "dir":"right", "loc":"-250 -40"},
-          {"key":211, "parent":21, "text":"拨打000000", "brush":"coral", "dir":"right", "loc":"-160 -40"},
-          {"key":22, "parent":2, "text":"线下开卡", "brush":"coral", "dir":"right", "loc":"-250 20"},
-          {"key":221, "parent":22, "text":"柜台办理", "brush":"coral", "dir":"right", "loc":"-160 20"},
-          {"key":3, "parent":0, "text":"挂失", "brush":"darkseagreen", "dir":"right", "loc":"-300 30"},
-          {"key":4, "parent":0, "text":"补卡", "brush":"violet", "dir":"right", "loc":"-300 70"},
-          {"key":5, "parent":0, "text":"还款", "brush":"skyblue", "dir":"right", "loc":"-300 110"},
-          {"key":51, "parent":5, "text":"分期申请", "brush":"skyblue", "dir":"right", "loc":"-250 70"},
-          {"key":511, "parent":51, "text":"选择期数", "brush":"skyblue", "dir":"right", "loc":"-160 70"},
-          {"key":5111, "parent":511, "text":"确定分期", "brush":"skyblue", "dir":"right", "loc":"-70 70"},
-          {"key":52, "parent":5, "text":"还款", "brush":"skyblue", "dir":"right", "loc":"-250 150"},
-          {"key":521, "parent":52, "text":"手机银行", "brush":"skyblue", "dir":"right", "loc":"-190 110"},
-          {"key":522, "parent":52, "text":"ATM", "brush":"skyblue", "dir":"right", "loc":"-190 150"},
-          {"key":523, "parent":52, "text":"营业厅办理", "brush":"skyblue", "dir":"right", "loc":"-190 190"},
-          {"key":6, "parent":0, "text":"借钱", "brush":"blue", "dir":"right", "loc":"-300 150"}
+          {"key":0, "text":"建行信用卡", "brush":"#dcdcdc", "loc":"-400 50"},
+          {"key":1, "parent":0, "text":"申请", "brush":"#3a8ddf", "dir":"right", "loc":"-300 -50"},
+          {"key":2, "parent":0, "text":"开卡", "brush":"#e0826f", "dir":"right", "loc":"-300 -10"},
+          {"key":21, "parent":2, "text":"电话开卡", "brush":"#e0826f", "dir":"right", "loc":"-250 -40"},
+          {"key":211, "parent":21, "text":"拨打000000", "brush":"#e0826f", "dir":"right", "loc":"-160 -40"},
+          {"key":22, "parent":2, "text":"线下开卡", "brush":"#e0826f", "dir":"right", "loc":"-250 20"},
+          {"key":221, "parent":22, "text":"柜台办理", "brush":"#e0826f", "dir":"right", "loc":"-160 20"},
+          {"key":3, "parent":0, "text":"挂失", "brush":"#5ebc5b", "dir":"right", "loc":"-300 30"},
+          {"key":4, "parent":0, "text":"补卡", "brush":"#b149c7", "dir":"right", "loc":"-300 70"},
+          {"key":5, "parent":0, "text":"还款", "brush":"#75cfdc", "dir":"right", "loc":"-300 110"},
+          {"key":51, "parent":5, "text":"分期申请", "brush":"#75cfdc", "dir":"right", "loc":"-250 70"},
+          {"key":511, "parent":51, "text":"选择期数", "brush":"#75cfdc", "dir":"right", "loc":"-160 70"},
+          {"key":5111, "parent":511, "text":"确定分期", "brush":"#75cfdc", "dir":"right", "loc":"-70 70"},
+          {"key":52, "parent":5, "text":"还款", "brush":"#75cfdc", "dir":"right", "loc":"-250 150"},
+          {"key":521, "parent":52, "text":"手机银行", "brush":"#75cfdc", "dir":"right", "loc":"-190 110"},
+          {"key":522, "parent":52, "text":"ATM", "brush":"#75cfdc", "dir":"right", "loc":"-190 150"},
+          {"key":523, "parent":52, "text":"营业厅办理", "brush":"#75cfdc", "dir":"right", "loc":"-190 190"},
+          {"key":6, "parent":0, "text":"借钱", "brush":"#3a8ddf", "dir":"right", "loc":"-300 150"}
           ]
           }
     }
@@ -71,6 +73,7 @@ import gojs, { Diagram } from 'gojs'
         myDiagram.nodeTemplate = 
         gm(go.Node, "Vertical",
           { selectionObjectName: "TEXT" }, 
+          //{ selectionChanged: nodeSelectionChanged },
           // 定义节点的文本
           gm(go.TextBlock,
             { 
@@ -118,10 +121,16 @@ import gojs, { Diagram } from 'gojs'
                 layoutTree(node);
               });
             });
+            myDiagram.addDiagramListener("ObjectSingleClicked", function(e) {
+              console.log(e.subject.Ub)
+              _this.bus.$on('update', function(e) {
+                console.log(e.subject.Ub)
+              })
+            });
             myDiagram.model = go.Model.fromJson(_this.mindNode);
-
-            var myOverview = gm(go.Overview, 'myOverviewDiv',
-                               { observed: diagram });   
+            //略缩图
+            //var myOverview = gm(go.Overview, 'myOverviewDiv',
+                               //{ observed: diagram });   
 },
   methods: {
 
@@ -163,7 +172,16 @@ import gojs, { Diagram } from 'gojs'
               });
               // do one layout and then the other without moving the shared root node   
             },
+            // nodeSelectionChanged(node) {
+            //   if(node.isSelected) {
+            //     //节点选中执行的内容
+            //     console.log(node.data);//节点的属性信息
+            //     console.log(node.data.key);//拿到节点的Key，拿其他属性类似
+            //     var nodel = myDiagram.model.findNodeForKey
+            //   }
+            // }
   },
+
 	}
 </script>
 
@@ -172,5 +190,9 @@ import gojs, { Diagram } from 'gojs'
 	//width: 750px;
   //height: 450px;
   padding-left: 10%;
+  .myDiagramDiv canvas{
+    outline: none;
+  }
 }
+
 </style>

@@ -37,7 +37,7 @@
 <script>
 import SearchBox from "../components/SearchBox";
 import AnnotationArea from "../components/AnnotationArea"
-import gojs from 'gojs'
+import gojs from '../components/gojs'
 import MindOne from "../components/MindOne"
 import robotChat from "../components/robotChat"
 export default {
