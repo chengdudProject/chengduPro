@@ -22,8 +22,8 @@
                 <div class="right-dot"></div>
             </div>
         </div>
-        <el-row :gutter="0" id="searchBox-content">
-            <el-col :span="13" id="searchBox-content-left">
+        <el-row :gutter="100" id="searchBox-content">
+            <el-col :span="14" id="searchBox-content-left">
                 <div class="grid-content"> 
                     <p>计算结果</p>
                     <div class="grid-content-detail" v-show="!isPerson">
@@ -252,24 +252,27 @@
                             <li :class="businessTabIndex==3?'active':''" @click="businessTabClick(3)">最近上线</li>
                             <li :class="businessTabIndex==4?'active':''" @click="businessTabClick(4)">重要通知</li>
                         </ul>
-                        <ul class="business-style-list">
-                            <li v-for="(item,index) in businessStyleList" :key="index" :class="`background-${item.background}`"><div class="item-value">{{item.value}}</div><div class="border-base1"></div><div class="border-base2"></div></li>
-                        </ul>
+                        <div class="business-style-list">
+                            <ul>
+                                <li v-for="(item,index) in businessStyleList" :key="index" :class="`background-${item.background}`"><div class="item-value">{{item.value}}</div><div class="border-base1"></div><div class="border-base2"></div></li>
+                            </ul>
+                        </div>
+                        
                         <el-button id="business-more"></el-button>
                     </div>
                     <div id="relation-network" v-show="isPerson">
                         <p>人际关系网</p>
                         <div class="relation-network-content">
-                            <echarts-relation @changeSelectName="changeSelectName"></echarts-relation>
+                            <echarts-relation @changeSelectName="changeSelectName"  width="90%" height="calc(100% - 100px)"></echarts-relation>
                         </div>
                         <el-button type="primary" class="relation-network-btn" @click="makeComparison">比一比</el-button>
                     </div>
                     <div id="six-space" v-show="isPerson">
                         <p>六度空间</p>
                         <div class="six-space-content">
-                            <echarts-six-space :list="sixSpaceList"></echarts-six-space>
+                            <echarts-six-space :list="sixSpaceList"  width="90%" height="calc(100% - 100px)"></echarts-six-space>
                         </div>
-                        <el-button type="primary" class="six-space-btn">结果</el-button>
+                        <el-button type="primary" class="six-space-btn" @click="showSixSpace">结果</el-button>
                     </div>
                 </div>
             </el-col>
@@ -286,6 +289,10 @@ import echartsSixSpace from '@/components/echartsSixSpace';
 export default {
     components:{
         robotChat,countItem,slideShow,echartsRelation,echartsSixSpace
+    },
+    mounted() {
+        this.searchVal=this.$route.params.searchVal;
+        this.searchContent();
     },
     data(){
         return{
@@ -589,7 +596,22 @@ export default {
             this.changeSelectList=arr;
         },
         makeComparison(){
-            this.sixSpaceList=this.changeSelectList;
+            if(this.changeSelectList.length<2){
+                this.$message({
+                    showClose: true,
+                    type:"warning",
+                    message:"选择比一比的数量不能少于两个！"
+                })
+            }else if(this.changeSelectList.length==2){
+                this.sixSpaceList=this.changeSelectList;
+                console.log(this.sixSpaceList)
+            }else if(this.changeSelectList.length>2){
+                this.$message({
+                    showClose: true,
+                    type:"warning",
+                    message:"选择比一比的数量不能超过两个！"
+                })
+            }
         },
         searchContent(){
             if(this.searchVal.indexOf("谢霆锋")>=0){
@@ -598,7 +620,11 @@ export default {
                 this.isPerson=false;
             }
         },
-     
+        showSixSpace(){
+            this.$router.push({
+                path:"/relationNetwork"
+            })
+        },
         //连线方法
         onAddNodeModel (event, node) {
             console.log('添加节点', event.clientX, event.clientY, node)
@@ -1045,44 +1071,47 @@ export default {
                     }
                 }
                 .business-style-list{
-                    list-style: none;
-                    margin: 0;
-                    padding: 0;
-                    background: #202333;
-                    height: 300px;
-                    overflow: hidden;
                     padding: 30px 10px 50px 10px;
-                    color: #fff;
-                    li{
-                        float: left;
-                        margin: 10px;
-                        position: relative;
-                        border-radius: 6px;
-                        .item-value{
-                            padding: 10px 20px;
+                    background: #202333;
+                    ul{
+                        list-style: none;
+                        margin: 0;
+                        padding: 0;
+                        height: 300px;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                        color: #fff;
+                        li{
+                            float: left;
+                            margin: 10px;
+                            position: relative;
+                            border-radius: 6px;
+                            .item-value{
+                                padding: 10px 20px;
+                            }
+                            .border-base1{
+                                width: calc(100% - 2px);
+                                height: 10px;
+                                background: #202333;
+                                position: absolute;
+                                bottom: 1px;
+                                left: 1px;
+                                border-radius:0 0 6px 6px;
+                                z-index: 999;
+                            }
+                            .border-base2{
+                                width: 100%;
+                                height: 10px;
+                                background: #ccc;
+                                position: absolute;
+                                bottom: -2px;
+                                left: 0px;
+                                border-radius:0 0 6px 6px;
+                                z-index: 0;
+                            }
                         }
-                        .border-base1{
-                            width: calc(100% - 2px);
-                            height: 10px;
-                            background: #202333;
-                            position: absolute;
-                            bottom: 1px;
-                            left: 1px;
-                            border-radius:0 0 6px 6px;
-                            z-index: 999;
-                        }
-                        .border-base2{
-                            width: 100%;
-                            height: 10px;
-                            background: #ccc;
-                            position: absolute;
-                            bottom: -2px;
-                            left: 0px;
-                            border-radius:0 0 6px 6px;
-                            z-index: 0;
-                        }
+                        
                     }
-
                     .background-blue{
                         background: #20447F;
                         .border-base1{
@@ -1100,6 +1129,25 @@ export default {
                         .border-base2{
                             background: #00E8FF;
                         }
+                    }
+                    ::-webkit-scrollbar{
+                        width:10px;
+                        height:10px;
+                        /**/
+                    }
+                    ::-webkit-scrollbar-track{
+                        background: #000;
+                        border-radius:2px;
+                    }
+                    ::-webkit-scrollbar-thumb{
+                        background: #DAEBF9;
+                        border-radius:10px;
+                    }
+                    ::-webkit-scrollbar-thumb:hover{
+                        background: #4FADFF;
+                    }
+                    ::-webkit-scrollbar-corner{
+                        background: #179a16;
                     }
                 }
                 #business-more{
