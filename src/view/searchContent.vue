@@ -26,7 +26,7 @@
             <el-col :span="14" id="searchBox-content-left">
                 <div class="grid-content"> 
                     <p>计算结果</p>
-                    <div class="grid-content-detail" v-show="!isPerson">
+                    <div class="grid-content-detail" v-show="isCard">
                         <count-item countTitle="智能计算" countTitleDes="仅显示该问题的智能计算的内容" countTitleColor="#4FADFF">
                             <div id="intelligent-computing">
                                 <div class="computing-logo">
@@ -91,7 +91,7 @@
                         <count-item countTitle="内容精选" countTitleDes="仅显示部分热门信息，更多请点击或直接搜索问题" countTitleColor="#2DF2FF">
                             <div id="content-select">
                                 <ul>
-                                    <li v-for="(item,index) in contentSelectList" :key="index">
+                                    <li v-for="(item,index) in contentSelectList" :key="index" @click="selectSearch(index)">
                                         <span>{{item.title}}</span>
                                         <b :class="item.buttonColor=='blue'?'button-blue':'button-green'">{{item.buttonName}}</b>
                                         <i>
@@ -102,7 +102,7 @@
                             </div>
                         </count-item>
                     </div>
-                    <div class="grid-content-link" v-show="!isPerson">
+                    <div class="grid-content-link" v-show="isCard">
                         <ul>
                             <li v-for="(item,linksIndex) in linkList" :key="linksIndex">
                                 <p class="link-title" v-html="item.title"></p>
@@ -197,10 +197,17 @@
                             </ul>
                         </count-item>
                     </div>
+                    <div class="grid-content-detail" v-show="isChat">
+                        <count-item countTitle="问答结果" countTitleDes="仅显示该问题的智能计算的内容" countTitleColor="#4FADFF">
+                            <div id="chat-content">
+                                今天深圳天气不错哦
+                            </div>
+                        </count-item>
+                    </div>
                 </div>
             </el-col>
             <el-col :span="2" id="searchBox-middle">
-                <task-work-area
+                <!-- <task-work-area
                     :id="work_id" 
                     :ini="ini_config" 
                     ref="area"
@@ -233,12 +240,12 @@
                         :updateTem="updateCompleted" 
                         >
                     </task-initial-node>
-                </task-work-area>
+                </task-work-area> -->
             </el-col>
             <el-col :span="9" id="searchBox-content-right">
                 <div class="grid-content">
-                    <p v-show="!isPerson">主要学习来源</p>
-                    <ul class="searchBox-content-right-list" v-show="!isPerson">
+                    <p v-show="isCard">主要学习来源</p>
+                    <ul class="searchBox-content-right-list" v-show="isCard">
                         <li v-for="(item,index) in rightList" :key="index" :class="item.active?'active':''">
                             <p>{{item.title}}</p>
                             <p>{{item.url}}</p>
@@ -260,10 +267,10 @@
                         
                         <el-button id="business-more"></el-button>
                     </div>
-                    <div id="relation-network" v-show="isPerson">
-                        <p>人际关系网</p>
+                    <div id="relation-network" v-show="isPerson||isCard">
+                        <p>{{relationTitle}}</p>
                         <div class="relation-network-content">
-                            <echarts-relation @changeSelectName="changeSelectName"  width="90%" height="calc(100% - 100px)"></echarts-relation>
+                            <echarts-relation @changeSelectName="changeSelectName"  width="90%" height="calc(100% - 100px)" :chartData="chartData" :chartLink="chartLink"></echarts-relation>
                         </div>
                         <el-button type="primary" class="relation-network-btn" @click="makeComparison">比一比</el-button>
                     </div>
@@ -286,6 +293,8 @@ import countItem from '@/components/countItem';
 import slideShow from '@/components/slideShow';
 import echartsRelation from '@/components/echartsRelation';
 import echartsSixSpace from '@/components/echartsSixSpace';
+import xieTingFeng from "../../static/img/xietingfeng.png";
+import zhuLiQian from "../../static/img/zhuliqian.png";
 export default {
     components:{
         robotChat,countItem,slideShow,echartsRelation,echartsSixSpace
@@ -452,6 +461,90 @@ export default {
                     detailList:[]
                 }
             ],
+            selectLinkList:[
+                {
+                    title:"<span style='color:#D43134'>信用卡</span>的<span style='color:#D43134'>功能</span>是什么",
+                    url:"https://www.rong360.com/",
+                    text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                    detailList:[]
+                },
+                {
+                    title:"<span style='color:#D43134'>信用卡</span>的量<span style='color:#D43134'>人均发卡量</span>是多少",
+                    url:"https://www.rong360.com/",
+                    text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                    detailList:[]
+                },
+                {
+                    title:"<span style='color:#D43134'>信用卡</span>的<span style='color:#D43134'>发卡量</span>是多少",
+                    url:"https://www.rong360.com/",
+                    text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                    detailList:[]
+                },
+                {
+                    title:"<span style='color:#D43134'>信用卡</span>的<span style='color:#D43134'>免息期</span>是多久",
+                    url:"https://www.rong360.com/",
+                    text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                    detailList:[]
+                },
+                {
+                    title:"<span style='color:#D43134'>信用卡</span>的<span style='color:#D43134'>有效期</span>是多久",
+                    url:"https://www.rong360.com/",
+                    text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                    detailList:[]
+                },
+                {
+                    title:"<span style='color:#D43134'>信用卡</span>的<span style='color:#D43134'>年利率</span>是多少",
+                    url:"https://www.rong360.com/",
+                    text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                    detailList:[]
+                },
+                [
+                    {
+                        title:"<span style='color:#D43134'>信用卡</span>和理财服务，就在建行私人信贷平台",
+                        url:"https://www.rong360.com/",
+                        text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                        detailList:[
+                            "住房贷款","信贷经理","登录信用卡","咨询","贷款咨询","金融百科"
+                        ]
+                    },
+                    {
+                        title:"<span style='color:#D43134'>信用卡</span>和理财服务，就在建行私人信贷平台",
+                        url:"https://www.rong360.com/",
+                        text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                        detailList:[]
+                    },
+                    {
+                        title:"<span style='color:#D43134'>信用卡</span>和理财服务，就在建行私人信贷平台",
+                        url:"https://www.rong360.com/",
+                        text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                        detailList:[]
+                    },
+                    {
+                        title:"<span style='color:#D43134'>信用卡</span>和理财服务，就在建行私人信贷平台",
+                        url:"https://www.rong360.com/",
+                        text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                        detailList:[]
+                    },
+                    {
+                        title:"<span style='color:#D43134'>信用卡</span>和理财服务，就在建行私人信贷平台",
+                        url:"https://www.rong360.com/",
+                        text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                        detailList:[]
+                    },
+                    {
+                        title:"<span style='color:#D43134'>信用卡</span>和理财服务，就在建行私人信贷平台",
+                        url:"https://www.rong360.com/",
+                        text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                        detailList:[]
+                    },
+                    {
+                        title:"<span style='color:#D43134'>信用卡</span>和理财服务，就在建行私人信贷平台",
+                        url:"https://www.rong360.com/",
+                        text:"建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品建行私人信贷平台是专注于金融领域的智能搜索平台，为企业和个人提供专业的贷款，信用卡及理财在线搜索和申请服务，目前已合作近10000家金融机构，涵盖30000款金融产品",
+                        detailList:[]
+                    }
+                ]
+            ],
             tagList:["信用卡申请","信用卡补办申请","信用卡挂失","信用卡取现","信用卡换卡","信用卡分期"],
             tagIndex:0,
             contentSelectList:[
@@ -547,7 +640,291 @@ export default {
             ],
             changeSelectList:[],
             sixSpaceList:[],
-            isPerson:true
+            isPerson:true,
+            isCard:false,
+            isChat:false,
+            relationTitle:"人际关系网",
+            chartData:[
+                {
+                name: "徐云",
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#59D69A",
+                    borderWidth: 20,
+                    shadowBlur: 15,
+                    shadowColor: "#59D69A",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${zhuLiQian}`,
+                },
+                // {
+                //   name: "徐贱云",
+                //   draggable: true,
+                //   symbol: `image://${imgSrc}`,
+                //   symbolSize:100
+                // },
+                {
+                name: "刘德华",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#E1CD0C",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#E1CD0C",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${xieTingFeng}`,
+                },
+                {
+                name: "邓志荣",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#6AF5F5",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#6AF5F5",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${zhuLiQian}`,
+                },
+                {
+                name: "李荣庆",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#1C5AFE",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#1C5AFE",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${xieTingFeng}`,
+                },
+                {
+                name: "郑志勇",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#59D69A",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#59D69A",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${zhuLiQian}`,
+                },
+                {
+                name: "赵英杰",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#59D69A",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#59D69A",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${xieTingFeng}`,
+                },
+                {
+                name: "王承军",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#BF169C",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#BF169C",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${zhuLiQian}`,
+                },
+                {
+                name: "陈卫东",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#59D69A",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#59D69A",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${xieTingFeng}`,
+                },
+                {
+                name: "邹劲松",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#6AF5F5",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#6AF5F5",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${zhuLiQian}`,
+                },
+                {
+                name: "赵成",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#1C5AFE",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#1C5AFE",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${zhuLiQian}`,
+                },
+                {
+                name: "陈现忠",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#1C5AFE",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#1C5AFE",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${xieTingFeng}`,
+                },
+                {
+                name: "陶泳",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#6AF5F5",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#6AF5F5",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${zhuLiQian}`,
+                },
+                {
+                name: "王德福",
+                category: 1,
+                draggable: true,
+                itemStyle: {
+                    normal: {
+                    borderColor: "#59D69A",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#59D69A",
+                    color: "#2c343c"
+                    }
+                },
+                symbol: `image://${xieTingFeng}`,
+                }
+            ],
+            chartLink:[{
+                source: 0,
+                target: 1,
+                category: 0,
+                value: "夫妻"
+                },
+                {
+                source: 0,
+                target: 2,
+                value: "子女"
+                },
+                {
+                source: 0,
+                target: 3,
+                value: "夫妻"
+                },
+                {
+                source: 0,
+                target: 4,
+                value: "父母"
+                },
+                {
+                source: 1,
+                target: 2,
+                value: "表亲"
+                },
+                {
+                source: 0,
+                target: 5,
+                value: "朋友"
+                },
+                {
+                source: 4,
+                target: 5,
+                value: "朋友"
+                },
+                {
+                source: 2,
+                target: 8,
+                value: "叔叔"
+                },
+                {
+                source: 0,
+                target: 12,
+                value: "朋友"
+                },
+                {
+                source: 6,
+                target: 11,
+                value: "爱人"
+                },
+                {
+                source: 6,
+                target: 3,
+                value: "朋友"
+                },
+                {
+                source: 7,
+                target: 5,
+                value: "朋友"
+                },
+                {
+                source: 9,
+                target: 10,
+                value: "朋友"
+                },
+                {
+                source: 3,
+                target: 10,
+                value: "朋友"
+                },
+                {
+                source: 2,
+                target: 11,
+                value: "同学"
+                }
+            ]
+        
+        
         }
     },
     methods:{
@@ -616,8 +993,144 @@ export default {
         searchContent(){
             if(this.searchVal.indexOf("谢霆锋")>=0){
                 this.isPerson=true;
+                this.isCard=false;
+                this.isChat=false;
+                this.relationTitle="人物关系网";
+            }else if(this.searchVal.indexOf("信用卡")>=0){
+                this.isPerson=false;
+                this.isCard=true;
+                this.isChat=false;
+                this.relationTitle="关键词关系网";
+                this.chartData=[
+                    {
+                        name: "信用卡",
+                        id:"0",
+                        symbolSize:80,
+                        draggable: true,
+                        itemStyle: {
+                            normal: {
+                            borderColor: "#59D69A",
+                            borderWidth: 20,
+                            shadowBlur: 15,
+                            shadowColor: "#59D69A",
+                            color: "#2c343c"
+                            }
+                        },
+                        symbol: `image://${xieTingFeng}`,
+                    },
+                    {
+                        name: "红十字会农卡信用卡",
+                        id:"1",
+                        draggable: true,
+                        itemStyle: {
+                            normal: {
+                            borderColor: "#59D69A",
+                            borderWidth: 20,
+                            shadowBlur: 15,
+                            shadowColor: "#59D69A",
+                            color: "#2c343c"
+                            }
+                        },
+                        symbol: `image://${zhuLiQian}`,
+                    },
+                    {
+                        name: "国航知音农卡信用卡",
+                        id:"2",
+                        draggable: true,
+                        itemStyle: {
+                            normal: {
+                            borderColor: "#59D69A",
+                            borderWidth: 20,
+                            shadowBlur: 15,
+                            shadowColor: "#59D69A",
+                            color: "#2c343c"
+                            }
+                        },
+                        symbol: `image://${zhuLiQian}`,
+                    },
+                    {
+                        name: "龙卡腾讯游戏信用卡",
+                        id:"3",
+                        draggable: true,
+                        itemStyle: {
+                            normal: {
+                            borderColor: "#59D69A",
+                            borderWidth: 20,
+                            shadowBlur: 15,
+                            shadowColor: "#59D69A",
+                            color: "#2c343c"
+                            }
+                        },
+                        symbol: `image://${zhuLiQian}`,
+                    },
+                    {
+                        name: "公安便民龙卡IC信用卡",
+                        id:"4",
+                        draggable: true,
+                        itemStyle: {
+                            normal: {
+                            borderColor: "#59D69A",
+                            borderWidth: 20,
+                            shadowBlur: 15,
+                            shadowColor: "#59D69A",
+                            color: "#2c343c"
+                            }
+                        },
+                        symbol: `image://${zhuLiQian}`,
+                    },
+                    {
+                        name: "百大龙卡信用卡",
+                        id:"5",
+                        draggable: true,
+                        itemStyle: {
+                            normal: {
+                            borderColor: "#59D69A",
+                            borderWidth: 20,
+                            shadowBlur: 15,
+                            shadowColor: "#59D69A",
+                            color: "#2c343c"
+                            }
+                        },
+                        symbol: `image://${zhuLiQian}`,
+                    },
+                ];
+                this.chartLink=[
+                    {
+                        source: 0,
+                        target: 1,
+                        category: 0,
+                        value: "分类"
+                    },
+                    {
+                        source: 0,
+                        target: 2,
+                        category: 0,
+                        value: "分类"
+                    },
+                    {
+                        source: 0,
+                        target: 3,
+                        category: 0,
+                        value: "分类"
+                    },
+                    {
+                        source: 0,
+                        target: 4,
+                        category: 0,
+                        value: "分类"
+                    },
+                    {
+                        source: 0,
+                        target: 5,
+                        category: 0,
+                        value: "分类"
+                    },
+                ];
+                this.linkList=this.selectLinkList[6];
             }else{
                 this.isPerson=false;
+                this.isCard=false;
+                this.isChat=true;
             }
         },
         showSixSpace(){
@@ -638,25 +1151,25 @@ export default {
             }]
             newNode.inPorts = []
             this.nodes.push(newNode)
-            },
-            mouseFn (event, portData) {
+        },
+        mouseFn (event, portData) {
             console.log('mouseFn', 'on-mouse', '鼠标右击路径事件', event, portData)
-            },
-            mouseOverFn (event, portData) {
+        },
+        mouseOverFn (event, portData) {
             console.log('mouseFn', 'on-mouse-over', '鼠标划入路径事件', event, portData)
-            },
-            mouseOutFn (event, portData) {
+        },
+        mouseOutFn (event, portData) {
             console.log('mouseFn', 'on-mouse-out', '鼠标划出路径事件', event, portData)
-            },
-            selectlMethod: function (event, data, node) {
+        },
+        selectlMethod: function (event, data, node) {
             console.log('selectlMethod', 'on-select', '节点左键点击事件', event, data, node)
-            },
-            dragStart: function (event, node) {
+        },
+        dragStart: function (event, node) {
             let nodeData = event.dataTransfer.getData('nodedata')
             console.log('节点开始移动', event.clientX, event.clientY, node, JSON.parse(nodeData))
             this.startNode = {id: node.id, positionX: event.clientX, positionY: event.clientY}
-            },
-            dragEnd: function (event, node) {
+        },
+        dragEnd: function (event, node) {
             console.log('节点移动结束', event.clientX, event.clientY, node)
             let nodeXY = {}
             nodeXY.x = event.clientX
@@ -672,8 +1185,8 @@ export default {
                 this.initialData.positionX = node.positionX + (nodeXY.x - me.startNode.positionX)
                 this.initialData.positionY = node.positionY + (nodeXY.y - me.startNode.positionY)
             }
-            },
-            addPath: function (event, startData, endData) {
+        },
+        addPath: function (event, startData, endData) {
             let me = this
             console.log('添加路径', event, startData, endData)
             this.nodes.forEach(function (item) {
@@ -691,23 +1204,26 @@ export default {
                 endPort: endData
                 })
             }, 200)
-            },
-            dragGing: function (event) {
+        },
+        dragGing: function (event) {
             console.log('节点移动中...', event.clientX, event.clientY)
-            },
-            updateCompleted: function () {
+        },
+        updateCompleted: function () {
             console.log('updateCompleted!!')
             // 重新加载路径
             this.$refs.curve.vReload()
-            },
-            mouseMenu: function (event, id) {
+        },
+        mouseMenu: function (event, id) {
             console.log('mouseMenu', 'on-mouse', '工作区右击事件', event, id)
-            },
-            mouseNodeMenu: function (event, node) {
+        },
+        mouseNodeMenu: function (event, node) {
             console.log('mouseNodeMenu', 'on-mouse', '节点右击事件', event, node)
-            }
+        },
+        selectSearch(index){
+            this.linkList=[this.selectLinkList[index]]
+        }
 
-
+        
 
     },
     watch: {
@@ -1676,6 +2192,11 @@ export default {
         border: none;
         background: url("/static/img/down.png") no-repeat center center #212534;
     }
+}
+#chat-content{
+    color: #FFF;
+    font-size: 16px;
+    padding: 20px;
 }
 </style>
 <style lang="scss">
