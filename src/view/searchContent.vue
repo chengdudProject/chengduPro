@@ -199,7 +199,7 @@
                     </div>
                 </div>
             </el-col>
-            <el-col :span="2" id="searchBox-middle">
+            <!-- <el-col :span="2" id="searchBox-middle">
                 <task-work-area
                     :id="work_id" 
                     :ini="ini_config" 
@@ -234,7 +234,7 @@
                         >
                     </task-initial-node>
                 </task-work-area>
-            </el-col>
+            </el-col> -->
             <el-col :span="9" id="searchBox-content-right">
                 <div class="grid-content">
                     <p v-show="!isPerson">主要学习来源</p>
@@ -941,7 +941,7 @@ export default {
                         .link-text{
                             color: #FFF;
                             font-size: 12px;
-                            height: 34px;
+                            height: 32px;
                             padding: 0;
                             margin: 0;
                             text-overflow: -o-ellipsis-lastline;
