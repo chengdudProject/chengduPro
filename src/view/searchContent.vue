@@ -1419,6 +1419,7 @@ export default {
         
         
         #searchBox-content-left{
+            padding-left: 100px !important;
             .grid-content-detail{
                 min-height: 300px;
             }
