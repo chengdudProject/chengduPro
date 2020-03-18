@@ -40,7 +40,7 @@ import gojs, {Diagram} from '../components/gojs'
           {"key":523, "parent":52, "text":"营业厅办理", "brush":"#75cfdc", "dir":"right", "loc":"-190 190"},
           {"key":6, "parent":0, "text":"借钱", "brush":"#3a8ddf", "dir":"right", "loc":"-300 150"}
           ]
-          }
+          },
     }
   },
   mounted() {
@@ -123,10 +123,8 @@ import gojs, {Diagram} from '../components/gojs'
             });
             myDiagram.addDiagramListener("ObjectSingleClicked", function(e) {
               console.log(e.subject.Ub)
-              _this.bus.$on('update', function(e) {
-                console.log(e.subject.Ub)
-              })
-            });
+              this.$emit('func',e.subject.Ub)
+              });
             myDiagram.model = go.Model.fromJson(_this.mindNode);
             //略缩图
             //var myOverview = gm(go.Overview, 'myOverviewDiv',

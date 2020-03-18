@@ -27,7 +27,7 @@
           <i class="iconL"><img src="../assets/iconL.png" alt=""></i>
           <i class="iconR"><img src="../assets//iconR.png" alt=""></i>
         </div>
-        <annotation-area></annotation-area>
+        <annotation-area :annotationInfo="annotationInfo"></annotation-area>
 	    </div>
        
   </div>
@@ -52,7 +52,8 @@ export default {
       title:"",
       date: "",
       robotShow:false,
-      pageName: '思维导图'
+      pageName: '思维导图',
+      annotationInfo: "持卡人",
     }
   },
   methods: {

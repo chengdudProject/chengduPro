@@ -3,7 +3,7 @@
    <div class="note_title">注释区域</div>
 	 <div class="note_content">
 		 <div class="explanation">
-			 <div class="explanation_title">{{notesInfo.title}}</div>
+			 <div class="explanation_title">{{annotationInfo}}</div>
 			 <div class="explanation_content">{{notesInfo.content}}</div>
 		 </div>
 		 <el-divider></el-divider>
@@ -72,11 +72,20 @@
 				],
 				items: [
 					{ type: '', label: '信用卡取现' },
-          { type: 'info', label: '信用卡分期还款' },
-          { type: 'info', label: '信用卡逾期' },
-          { type: 'info', label: '储蓄卡' },
-          { type: 'info', label: '储蓄卡挂失' }
+					{ type: 'info', label: '信用卡分期还款' },
+					{ type: 'info', label: '信用卡逾期' },
+					{ type: 'info', label: '储蓄卡' },
+					{ type: 'info', label: '储蓄卡挂失' }
 				]
+			}
+		},
+		props: {
+            annotationInfo: {
+				type: String,
+				value: "",
+				default: () => {
+					return {}
+				}
 			}
 		},
 		filters: {
