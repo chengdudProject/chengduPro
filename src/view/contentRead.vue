@@ -12,28 +12,39 @@
 	    <div class="content-card">
         <div class="card-title">{{title}}</div>
         <div class="card-date">{{date}}</div>
-        <div :style="cardStyle(item.type)" v-for="(item) in cardInfo" :key="item.id" >
-          {{item.article}}
+        <div :style="cardStyle(item.type)" v-for="(item) in cardInfo" :key="item.id" @click="annotation">
+          <!-- {{item.article | checkStyle}} -->
+          <article-content  v-html="checkStyle(item.article)"></article-content>
         </div>
       </div>
-      <annotation-area></annotation-area>
+      <annotation-area :annotationInfo="annotationInfo"></annotation-area>
     </div>
-       
 
        <robot-chat :robotShow="robotShow" @changeRobotState="changeRobotState"></robot-chat>
-    
-    
+
   </div>
 </template>
 <script>
 import SearchBox from "../components/SearchBox";
 import AnnotationArea from "../components/AnnotationArea"
 import robotChat from "../components/robotChat"
+import Vue from 'vue'
 export default {
   components: {
     SearchBox,
     AnnotationArea,
-    robotChat
+    robotChat,
+    'article-content': {
+      props: {
+        html:String
+      },
+      render (h) {
+        const com =Vue.extend({
+          template: `<div>${this.html}</div>`
+        });
+        return h(com, {});
+      }
+    }
   },
   data(){
     return{
@@ -41,6 +52,34 @@ export default {
       title: '信用卡取现',
       date: '创建时间： 2019年12月12日； 作者：刘茜茜',
       robotShow:false,
+      annotationInfo: "持卡人",
+      // annotationInfo: {
+      //   notesInfo: {
+			// 		title: '持卡人',
+			// 		content: '所谓持卡人，就是办理卡片时所用证件的主人，比如张三用其身份证在甲银行柜台办理一张银行卡，则这张银行卡的持卡人就是张三，即使这张银行卡由李四拿着，那持卡人仍是张三，不会变成李四。该银行卡的业务办理，均视为张三办理，由此带来的相关义务也由张三承担。'
+			// 	},
+			// 	linksList: [
+			// 		{
+			// 			id:0,
+			// 			title: '信用卡丢了怎么补办？',
+			// 			website: 'https://zhidao.baidu.com',
+			// 			content: '持卡人应即时办理挂失。信用卡挂失后的盗用风险由银行承担，挂失前48小时内的非凭密码消费对河涸海干'
+			// 		},
+			// 		{
+			// 			id:1,
+			// 			title: '信用卡丢了怎么补办？',
+			// 			website: 'https://zhidao.baidu.com',
+			// 			content: '持卡人应即时办理挂失。信用卡挂失后的盗用风险由银行承担，挂失前48小时内的非凭密码消费对河涸海干'
+			// 		}
+			// 	],
+			// 	items: [
+			// 		{ type: '', label: '信用卡取现' },
+			// 		{ type: 'info', label: '信用卡分期还款' },
+			// 		{ type: 'info', label: '信用卡逾期' },
+			// 		{ type: 'info', label: '储蓄卡' },
+			// 		{ type: 'info', label: '储蓄卡挂失' }
+			// 	]
+      // },
       cardInfo: [
         {id:1,
          type:'small',
@@ -95,15 +134,7 @@ export default {
          article:'关于信用卡取现方法，持卡人只须登陆银行信用卡网上银行，选择预借现金功能，然后根据提示操作，从信用卡预借的现金就可直接打入个人借记卡账户'+
                   '操作极为简便。电话预借现金就是通过拨打银行信用卡客服热线，根据语音提示，将预借现金打入个人借记卡账户。'
         },
-      ],
-      cardCheck: [
-        {key:"持卡人"}, 
-        {key:"溢缴款取现"},
-        {key:"溢缴款"},
-        {key:"信用额度"},
-        {key:"预借现金"}, 
-        {key:"借记卡"}
-      ]
+      ],    
     }
   },
   computed: {
@@ -123,29 +154,26 @@ export default {
         },
         changeRobotState(){
             this.robotShow=false;
+        },
+        annotation(e) {
+          //匹配节点的本地名称
+            if(e.target.localName.toLowerCase() === 'i') {
+              // console.log(e.target.innerHTML);
+              this.annotationInfo = e.target.innerHTML;
+            }
+        },
+        checkStyle(value, oldWord) {
+        const keyWord = ['持卡人','溢缴款取现','信用额度','预借现金','借记卡'];
+        let lightWord = (value, oldWord) => {
+        for ( var key of keyWord) {
+          let regExp = new RegExp(key, 'g');//正则表达式方法，完全匹配对应的关键字，且全局声明
+          value = value.replace(regExp, '<i style="color:#289BFF; font-style:normal; cursor: pointer;">' + key + '</i>')
         }
+        return value;
+        }
+        return lightWord(value, keyWord);
+    },
   },
-//   filters: {
-//     checkStyle: function(value, cardCheck) {
-//           if(value && value.length > 0) {
-//             //匹配关键字正则
-//             for(var i=0; i<cardCheck[i].length; i++) {
-//             let replaceReg = new RegExp(cardCheck[i], "g");
-//             //高亮替换v-html值
-//             let replaceString = 
-//             '<span class="highlight"' +
-//             'style="color:blue;"' +
-//             '>' +
-//              cardCheck[i] +
-//             "</span>";
-//             vlaue = value.replace(
-//               replaceReg,
-//               replaceString
-//             )
-//           }
-//     }
-//     }
-//  } 
 }
 </script>
 <style lang="scss">
