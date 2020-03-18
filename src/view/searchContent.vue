@@ -206,13 +206,8 @@
                     </div>
                 </div>
             </el-col>
-<<<<<<< HEAD
-            <!-- <el-col :span="2" id="searchBox-middle">
-                <task-work-area
-=======
             <el-col :span="2" id="searchBox-middle">
                 <!-- <task-work-area
->>>>>>> 030e045e71800dcaf35c7804f9818311410003fd
                     :id="work_id" 
                     :ini="ini_config" 
                     ref="area"
@@ -245,13 +240,8 @@
                         :updateTem="updateCompleted" 
                         >
                     </task-initial-node>
-<<<<<<< HEAD
-                </task-work-area>
-            </el-col> -->
-=======
                 </task-work-area> -->
             </el-col>
->>>>>>> 030e045e71800dcaf35c7804f9818311410003fd
             <el-col :span="9" id="searchBox-content-right">
                 <div class="grid-content">
                     <p v-show="isCard">主要学习来源</p>
