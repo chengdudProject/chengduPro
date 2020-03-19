@@ -1263,6 +1263,9 @@ export default {
       }
     },
     searchContent() {
+      //   this.$router.push({
+      //     params: merge(this.$route.params, { searchVal: this.searchVal })
+      //   });
       if (this.searchVal.indexOf("谢霆锋") >= 0) {
         this.isPerson = true;
         this.isCard = false;
