@@ -3,7 +3,7 @@
     <div class="container"></div>
     <div class="attrBox" v-show="attrShow">
       <p>
-        {{attrValue}}
+        {{ attrValue }}
         <span class="close" @click="closeAttrBox"></span>
       </p>
     </div>
@@ -17,24 +17,23 @@ import zhuLiQian from "../../static/img/zhuliqian.png";
 
 export default {
   name: "personRelation",
-  props:{
-    width:{
-        type:String,
-        default:"100%"
+  props: {
+    width: {
+      type: String,
+      default: "100%"
     },
-    height:{
-        type:String,
-        default:"100%"
+    height: {
+      type: String,
+      default: "100%"
     },
-    chartData:{
-        type:Array,
-        default:[]
-        
+    chartData: {
+      type: Array,
+      default: []
     },
-    chartLink:{
-        type:Array,
-        default:[]
-    },
+    chartLink: {
+      type: Array,
+      default: []
+    }
   },
   data() {
     return {
@@ -322,15 +321,17 @@ export default {
       attrShow: false,
       attrValue: "我是属性框",
       series: "",
-      option:"",
-      selectNum:0,
-      lastSelectName:[]
+      option: "",
+      selectNum: 0,
+      lastSelectName: []
     };
   },
   mounted() {
     this.setRelationSeries();
-    console.log(222)
     this.initEchart();
+    window.onresize = () => {
+      this.myChart.resize();
+    };
   },
   methods: {
     initEchart() {
@@ -363,25 +364,27 @@ export default {
         timeout = setTimeout(() => {
           this.attrShow = true;
           this.attrValue = params.data.name;
-          let _option=this.myChart.getOption();
-          _option.series[0].data.forEach((item,index)=>{
-            if(item.name==params.data.name){
-              if(params.data.symbolSize==80){
-                for(let i=0;i<this.lastSelectName.length;i++){
-                  if(this.lastSelectName[i]==params.data.name){
-                    this.lastSelectName.splice(i,1);
-                    _option.series[0].data[index].symbolSize=50;
+          this.$emit("check-node", params.data.name);
+
+          let _option = this.myChart.getOption();
+          _option.series[0].data.forEach((item, index) => {
+            if (item.name == params.data.name) {
+              if (params.data.symbolSize == 80) {
+                for (let i = 0; i < this.lastSelectName.length; i++) {
+                  if (this.lastSelectName[i] == params.data.name) {
+                    this.lastSelectName.splice(i, 1);
+                    _option.series[0].data[index].symbolSize = 50;
                   }
                 }
-              }else{
+              } else {
                 this.lastSelectName.push(item.name);
-                _option.series[0].data[index].symbolSize=80;
+                _option.series[0].data[index].symbolSize = 80;
               }
-              console.log(this.lastSelectName)
+              // console.log(this.lastSelectName);
               this.myChart.setOption(_option);
-              this.$emit("changeSelectName",this.lastSelectName);
+              // this.$emit("changeSelectName", this.lastSelectName);
             }
-          })
+          });
         }, 300);
       });
       // this.myChart.on("dblclick", params => {
@@ -452,7 +455,7 @@ export default {
                 textStyle: {
                   fontSize: 16
                 },
-                color:"#FFF"
+                color: "#FFF"
               }
             },
             force: {
@@ -536,9 +539,9 @@ export default {
                 position: "inside",
                 show: true,
                 textStyle: {
-                  fontSize: 16
+                  fontSize: 14
                 },
-                color:"#FFF"
+                color: "#FFF"
               }
             },
             itemStyle: {
@@ -565,12 +568,12 @@ export default {
             },
             edgeLabel: {
               normal: {
-                show:true,
+                show: true,
                 textStyle: {
-                    fontSize: 16
+                  fontSize: 14
                 },
                 formatter: "{c}",
-                color:"#fff"
+                color: "#fff"
               }
             },
             data: [
@@ -580,57 +583,57 @@ export default {
                 draggable: false,
                 fixed: true,
                 value: [20, 150],
-                id:"1",
-                symbol: `image://${xieTingFeng}`,
+                id: "1",
+                // symbol: `image://${xieTingFeng}`,
                 itemStyle: {
-                    normal: {
-                      borderColor: "#fff",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#fff",
-                    }
+                  normal: {
+                    borderColor: "#fff",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#fff"
+                  }
                 },
                 label: {
                   normal: {
                     position: "bottom"
                   }
-                },
+                }
               },
               {
                 name: "朱丽倩",
                 symbolSize: 100,
                 draggable: false,
                 value: [470, 150],
-                symbol: `image://${zhuLiQian}`,
-                id:"2",
+                // symbol: `image://${zhuLiQian}`,
+                id: "2",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#fff",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#fff",
-                    }
+                  normal: {
+                    borderColor: "#fff",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#fff"
+                  }
                 },
                 label: {
                   normal: {
                     position: "bottom"
                   }
-                },
+                }
               },
               {
                 name: "谢贤",
                 value: [170, 270],
                 draggable: false,
                 fixed: true,
-                id:"3",
+                id: "3",
                 itemStyle: {
-                    normal: {
-                        borderColor: "orange",
-                        borderWidth: 4,
-                        shadowBlur: 15,
-                        shadowColor: "orange",
-                        color: "#962717"
-                    }
+                  normal: {
+                    borderColor: "orange",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "orange",
+                    color: "#962717"
+                  }
                 }
               },
               {
@@ -638,30 +641,30 @@ export default {
                 symbolSize: 80,
                 draggable: false,
                 value: [320, 270],
-                id:"4",
+                id: "4",
                 itemStyle: {
-                    normal: {
-                        borderColor: "orange",
-                        borderWidth: 4,
-                        shadowBlur: 15,
-                        shadowColor: "orange",
-                        color: "#962717"
-                    }
+                  normal: {
+                    borderColor: "orange",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "orange",
+                    color: "#962717"
+                  }
                 }
               },
               {
                 name: "陈冠希",
                 value: [170, 210],
                 draggable: false,
-                id:"5",
+                id: "5",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#6AF5F5",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#6AF5F5",
-                      color: "#2c343c",
-                    }
+                  normal: {
+                    borderColor: "#6AF5F5",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#6AF5F5",
+                    color: "#2c343c"
+                  }
                 }
               },
               {
@@ -669,30 +672,30 @@ export default {
                 symbolSize: 80,
                 draggable: false,
                 value: [320, 210],
-                id:"6",
+                id: "6",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#6AF5F5",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#6AF5F5",
-                      color: "#2c343c",
-                    }
+                  normal: {
+                    borderColor: "#6AF5F5",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#6AF5F5",
+                    color: "#2c343c"
+                  }
                 }
               },
               {
                 name: "容祖儿",
                 value: [170, 150],
                 draggable: false,
-                id:"7",
+                id: "7",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#1C5AFE",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#1C5AFE",
-                      color: "#000E65",
-                    }
+                  normal: {
+                    borderColor: "#1C5AFE",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#1C5AFE",
+                    color: "#000E65"
+                  }
                 }
               },
               {
@@ -700,30 +703,30 @@ export default {
                 symbolSize: 80,
                 draggable: false,
                 value: [320, 150],
-                id:"8",
+                id: "8",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#1C5AFE",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#1C5AFE",
-                      color: "#000E65",
-                    }
+                  normal: {
+                    borderColor: "#1C5AFE",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#1C5AFE",
+                    color: "#000E65"
+                  }
                 }
               },
               {
                 name: "谢振轩",
                 value: [170, 90],
                 draggable: false,
-                id:"9",
+                id: "9",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#9C18A8",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#9C18A8",
-                      color: "#520168",
-                    }
+                  normal: {
+                    borderColor: "#9C18A8",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#9C18A8",
+                    color: "#520168"
+                  }
                 }
               },
               {
@@ -731,30 +734,30 @@ export default {
                 symbolSize: 80,
                 draggable: false,
                 value: [320, 90],
-                id:"10",
+                id: "10",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#9C18A8",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#9C18A8",
-                      color: "#520168",
-                    }
+                  normal: {
+                    borderColor: "#9C18A8",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#9C18A8",
+                    color: "#520168"
+                  }
                 }
               },
               {
                 name: "张卫健",
                 value: [170, 30],
                 draggable: false,
-                id:"11",
+                id: "11",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#E1CD0C",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#E1CD0C",
-                      color: "#000E65",
-                    }
+                  normal: {
+                    borderColor: "#E1CD0C",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#E1CD0C",
+                    color: "#000E65"
+                  }
                 }
               },
               {
@@ -762,17 +765,17 @@ export default {
                 symbolSize: 80,
                 draggable: false,
                 value: [320, 30],
-                id:"12",
+                id: "12",
                 itemStyle: {
-                    normal: {
-                      borderColor: "#E1CD0C",
-                      borderWidth: 4,
-                      shadowBlur: 15,
-                      shadowColor: "#E1CD0C",
-                      color: "#000E65",
-                    }
+                  normal: {
+                    borderColor: "#E1CD0C",
+                    borderWidth: 4,
+                    shadowBlur: 15,
+                    shadowColor: "#E1CD0C",
+                    color: "#000E65"
+                  }
                 }
-              },
+              }
             ],
 
             links: [
@@ -781,9 +784,9 @@ export default {
                 target: "3",
                 value: "父子",
                 lineStyle: {
-                    normal: {
-                        curveness: 0.2,
-                    }
+                  normal: {
+                    curveness: 0.2
+                  }
                 }
               },
               {
@@ -791,40 +794,40 @@ export default {
                 target: "4",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: 0.2,
-                    }
-                },
+                  normal: {
+                    curveness: 0.2
+                  }
+                }
               },
               {
                 source: "4",
                 target: "2",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: 0.2,
-                    }
-                },
+                  normal: {
+                    curveness: 0.2
+                  }
+                }
               },
               {
                 source: "1",
                 target: "5",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: 0.1,
-                    }
-                },
+                  normal: {
+                    curveness: 0.1
+                  }
+                }
               },
-              
+
               {
                 source: "5",
                 target: "6",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: 0.1,
-                    }
+                  normal: {
+                    curveness: 0.1
+                  }
                 }
               },
               {
@@ -832,9 +835,9 @@ export default {
                 target: "2",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: 0.1,
-                    }
+                  normal: {
+                    curveness: 0.1
+                  }
                 }
               },
               {
@@ -842,9 +845,9 @@ export default {
                 target: "7",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: 0,
-                    }
+                  normal: {
+                    curveness: 0
+                  }
                 }
               },
               {
@@ -852,9 +855,9 @@ export default {
                 target: "8",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: 0,
-                    }
+                  normal: {
+                    curveness: 0
+                  }
                 }
               },
 
@@ -863,9 +866,9 @@ export default {
                 target: "2",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: 0,
-                    }
+                  normal: {
+                    curveness: 0
+                  }
                 }
               },
               {
@@ -873,9 +876,9 @@ export default {
                 target: "9",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: -0.1,
-                    }
+                  normal: {
+                    curveness: -0.1
+                  }
                 }
               },
               {
@@ -883,9 +886,9 @@ export default {
                 target: "10",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: -0.1,
-                    }
+                  normal: {
+                    curveness: -0.1
+                  }
                 }
               },
               {
@@ -893,9 +896,9 @@ export default {
                 target: "2",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: -0.1,
-                    }
+                  normal: {
+                    curveness: -0.1
+                  }
                 }
               },
 
@@ -904,9 +907,9 @@ export default {
                 target: "11",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: -0.2,
-                    }
+                  normal: {
+                    curveness: -0.2
+                  }
                 }
               },
               {
@@ -914,9 +917,9 @@ export default {
                 target: "12",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: -0.2,
-                    }
+                  normal: {
+                    curveness: -0.2
+                  }
                 }
               },
               {
@@ -924,24 +927,24 @@ export default {
                 target: "2",
                 value: "朋友",
                 lineStyle: {
-                    normal: {
-                        curveness: -0.2,
-                    }
+                  normal: {
+                    curveness: -0.2
+                  }
                 }
-              },
+              }
             ]
           }
         ]
       };
     }
   },
-  watch:{
-    chartData(val,oldVal){
+  watch: {
+    chartData(val, oldVal) {
       this.$nextTick(() => {
         this.setRelationSeries();
         this.initEchart();
-      })
-    },
+      });
+    }
   }
 };
 </script>
