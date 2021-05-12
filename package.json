@@ -17,7 +17,7 @@
     "element-ui": "^2.13.0",
     "gojs": "^2.1.8",
     "node-sass": "^4.13.1",
-    "swiper": "^5.3.1",
+    "swiper": "^6.5.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vue-task-node": "^1.4.0"
